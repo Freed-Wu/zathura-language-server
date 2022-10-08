@@ -1,0 +1,33 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/syntax.html
+name: Requirements.txt
+scope: source.requirementstxt
+# https://github.com/raimon49/requirements.txt.vim/blob/master/ftdetect/requirements.vim
+file_extensions:
+  - requirements.txt
+  - requirements.in
+  - pip
+
+contexts:
+  main:
+    - match: '(?i)\d+[\da-z\-_\.\*]*'
+      scope: constant.numeric.versions.requirementstxt
+    - match: '(#).*$\n?'
+      scope: comment.line.requirementstxt
+      captures:
+        1: punctuation.definition.comment.requirementstxt
+    - match: '(?i)^\[?--?[\da-z\-]*\]?'
+      scope: entity.name.function.option.requirementstxt
+    - match: ===?|<=?|>=?|~=|!=
+      scope: keyword.operator.logical.punctuation.requirementstxt
+    - match: '\[\S+\]'
+      scope: storage.type.extra.requirementstxt
+    - match: '(git\+?|hg\+|svn\+|bzr\+).*://.\S+'
+      scope: markup.underline.link.versioncontrols.requirementstxt
+    - match: '(@\s)?(https?|ftp|gopher)://?[^\s/$.?#].\S*'
+      scope: markup.underline.link.url.requirementstxt
+    - match: '(?i)^[a-z\d_\-\.]*[a-z\d]'
+      scope: string.package_name.requirementstxt
+    - match: ';\s[^#]+'
+      scope: keyword.control.environmentmarkers.requirementstxt

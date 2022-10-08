@@ -11,6 +11,7 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
       - id: end-of-file-fixer
+        exclude: ^examples/.*\.json$
       - id: detect-private-key
       - id: check-symlinks
       - id: check-ast
@@ -63,6 +64,14 @@ repos:
       - id: markdownlint-cli2
         additional_dependencies:
           - markdown-it-texmath@0.9.1
+  - repo: https://github.com/kumaraditya303/mirrors-pyright
+    rev: v1.1.270
+    hooks:
+      - id: pyright
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 6.1.1
+    hooks:
+      - id: pydocstyle
   - repo: https://github.com/vimjas/vint
     rev: v0.4a3
     hooks:
