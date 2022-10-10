@@ -1,6 +1,6 @@
 {
   "name": "syntax-test",
-  "description": "Vim filetype plugin for syntax-test (sublime-syntax test file).",
+  "description": "Vim filetype plugin for sublime-syntax and its test file.",
   "version": "0.0.1",
   "author": "Wu Zhenyu",
   "repository": {

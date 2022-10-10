@@ -1,13 +1,10 @@
 ""
 " https://github.com/neoclide/coc.nvim/wiki/Create-custom-source
-"
-" Press <Space> to trigger completion in the correct lines.
 function! coc#source#syntax_test#init() abort
   return {
         \ 'shortcut': 'syntax',
         \ 'priority': 9,
         \ 'filetypes': ['syntax_test', 'yaml'],
-        \ 'triggerCharacters': [' '],
         \ }
 endfunction
 
