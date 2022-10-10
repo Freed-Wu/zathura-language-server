@@ -35,11 +35,7 @@ function! syntax_test#init(...) abort
     let b:syntax_test_syntax = empty(&filetype) ? expand('%:e') : &filetype
   endif
 
-  let l:firstline = getline(1)
-  let b:syntax_test_comment = ""
-  if l:firstline =~# '\v^\s*.*\s+SYNTAX TEST\s+".*\.(sublime-syntax|tmLanguage)"'
-    let b:syntax_test_comment = get(split(l:firstline), 0)
-  endif
+  let b:syntax_test_comment = get(split(getline(1)), 0, '')
   if empty(b:syntax_test_comment)
     let b:syntax_test_comment = get(split(&commentstring, '\s*%s'), 0, '#')
   endif

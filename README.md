@@ -27,7 +27,16 @@
 
 Vim filetype plugin for [syntax-test](http://www.sublimetext.com/docs/syntax.html#testing).
 
+- [x] syntax highlight, include incorrect header (not match `\s+SYNTAX TEST\s+"[^"]"`)
+- [x] ftplugin: commentstring, etc
+- [x] linter
+- [x] completion
+
 ![Screenshot](https://user-images.githubusercontent.com/32936898/194713936-8ea3403f-8133-4c75-876f-9d68bc145123.png)
+
+![Correct](https://user-images.githubusercontent.com/32936898/194810204-57ad4ea2-355d-4664-bc26-6f5f3499bae6.png)
+
+![Incorrect](https://user-images.githubusercontent.com/32936898/194810209-7c8cb424-8388-40f4-9544-26759c89d72e.png)
 
 <!-- mdformat-toc start --slug=github --no-anchors --maxlevel=6 --minlevel=1 -->
 
