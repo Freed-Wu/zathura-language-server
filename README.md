@@ -45,6 +45,8 @@ Vim filetype plugin for:
 
 ![Completion](https://user-images.githubusercontent.com/32936898/194894911-0da392fd-59af-429c-8683-d9ee06bc3963.png)
 
+![sublime-syntax](https://user-images.githubusercontent.com/32936898/194923623-4be67f08-6487-4f90-9f24-6686fc3a3e12.png)
+
 <!-- mdformat-toc start --slug=github --no-anchors --maxlevel=6 --minlevel=1 -->
 
 - [syntax-test.vim](#syntax-testvim)
