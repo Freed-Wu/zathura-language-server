@@ -1,29 +1,29 @@
 # syntax-test.vim
 
-[![github/license](https://shields.io/github/license/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/blob/master/LICENSE)
+[![github/license](https://shields.io/github/license/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/blob/master/LICENSE)
 
-[![github/downloads](https://shields.io/github/downloads/Freed-Wu/syntax-test.vim/total)](https://github.com/Freed-Wu/syntax-test.vim/releases)
-[![github/downloads/latest](https://shields.io/github/downloads/Freed-Wu/syntax-test.vim/latest/total)](https://github.com/Freed-Wu/syntax-test.vim/releases/latest)
-[![github/issues](https://shields.io/github/issues/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/issues)
-[![github/issues-closed](https://shields.io/github/issues-closed/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/issues?q=is%3Aissue+is%3Aclosed)
-[![github/issues-pr](https://shields.io/github/issues-pr/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/pulls)
-[![github/issues-pr-closed](https://shields.io/github/issues-pr-closed/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/pulls?q=is%3Apr+is%3Aclosed)
-[![github/discussions](https://shields.io/github/discussions/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/discussions)
-[![github/milestones](https://shields.io/github/milestones/all/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/milestones)
-[![github/forks](https://shields.io/github/forks/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/network/members)
-[![github/stars](https://shields.io/github/stars/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/stargazers)
-[![github/watchers](https://shields.io/github/watchers/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/watchers)
-[![github/contributors](https://shields.io/github/contributors/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/graphs/contributors)
-[![github/commit-activity](https://shields.io/github/commit-activity/w/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/graphs/commit-activity)
-[![github/last-commit](https://shields.io/github/last-commit/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/commits)
-[![github/release-date](https://shields.io/github/release-date/Freed-Wu/syntax-test.vim)](https://github.com/Freed-Wu/syntax-test.vim/releases/latest)
+[![github/downloads](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases)
+[![github/downloads/latest](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/latest/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases/latest)
+[![github/issues](https://shields.io/github/issues/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/issues)
+[![github/issues-closed](https://shields.io/github/issues-closed/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/issues?q=is%3Aissue+is%3Aclosed)
+[![github/issues-pr](https://shields.io/github/issues-pr/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/pulls)
+[![github/issues-pr-closed](https://shields.io/github/issues-pr-closed/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/pulls?q=is%3Apr+is%3Aclosed)
+[![github/discussions](https://shields.io/github/discussions/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/discussions)
+[![github/milestones](https://shields.io/github/milestones/all/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/milestones)
+[![github/forks](https://shields.io/github/forks/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/network/members)
+[![github/stars](https://shields.io/github/stars/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/stargazers)
+[![github/watchers](https://shields.io/github/watchers/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/watchers)
+[![github/contributors](https://shields.io/github/contributors/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/graphs/contributors)
+[![github/commit-activity](https://shields.io/github/commit-activity/w/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/graphs/commit-activity)
+[![github/last-commit](https://shields.io/github/last-commit/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/commits)
+[![github/release-date](https://shields.io/github/release-date/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/releases/latest)
 
-![github/languages](https://shields.io/github/languages/count/Freed-Wu/syntax-test.vim)
-![github/languages/top](https://shields.io/github/languages/top/Freed-Wu/syntax-test.vim)
-![github/directory-file-count](https://shields.io/github/directory-file-count/Freed-Wu/syntax-test.vim)
-![github/code-size](https://shields.io/github/languages/code-size/Freed-Wu/syntax-test.vim)
-![github/repo-size](https://shields.io/github/repo-size/Freed-Wu/syntax-test.vim)
-![github/v](https://shields.io/github/v/release/Freed-Wu/syntax-test.vim)
+![github/languages](https://shields.io/github/languages/count/Freed-Wu/sublime-syntax.vim)
+![github/languages/top](https://shields.io/github/languages/top/Freed-Wu/sublime-syntax.vim)
+![github/directory-file-count](https://shields.io/github/directory-file-count/Freed-Wu/sublime-syntax.vim)
+![github/code-size](https://shields.io/github/languages/code-size/Freed-Wu/sublime-syntax.vim)
+![github/repo-size](https://shields.io/github/repo-size/Freed-Wu/sublime-syntax.vim)
+![github/v](https://shields.io/github/v/release/Freed-Wu/sublime-syntax.vim)
 
 Vim filetype plugin for:
 
@@ -103,7 +103,7 @@ manager (e.g., [dein](https://github.com/Shougo/dein.vim))
 #### Dein
 
 ```vim
-  call dein#add('Freed-Wu/syntax-test.vim', {
+  call dein#add('Freed-Wu/sublime-syntax.vim', {
         \ 'build': 'vimdoc .',
         \ })
 ```

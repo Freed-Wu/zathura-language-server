@@ -1,10 +1,10 @@
 {
-  "name": "syntax-test",
+  "name": "sublime-syntax",
   "description": "Vim filetype plugin for sublime-syntax and its test file.",
   "version": "0.0.1",
   "author": "Wu Zhenyu",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Freed-Wu/syntax-test.vim"
+    "url": "https://github.com/Freed-Wu/sublime-syntax.vim"
   }
 }
