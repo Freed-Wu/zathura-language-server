@@ -4,7 +4,7 @@ import json
 import sys
 from urllib import request
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, FeatureNotFound
 
 
 def main(output: str = ""):
@@ -20,7 +20,7 @@ def main(output: str = ""):
 
     try:
         soup = BeautifulSoup(html, "lxml")
-    except ImportError:
+    except FeatureNotFound:
         soup = BeautifulSoup(html, "html.parser")
 
     items = []
