@@ -1,13 +1,13 @@
 ""
 " https://github.com/neoclide/coc.nvim/wiki/Create-custom-source
 "
-" Press |^|, |-| and <Space> to trigger completion in the correct lines.
+" Press <Space> to trigger completion in the correct lines.
 function! coc#source#syntax_test#init() abort
   return {
-        \ 'shortcut': 'synTest',
+        \ 'shortcut': 'syntax',
         \ 'priority': 9,
-        \ 'filetypes': ['syntax_test'],
-        \ 'triggerCharacters': ['^', '-', ' '],
+        \ 'filetypes': ['syntax_test', 'yaml'],
+        \ 'triggerCharacters': [' '],
         \ }
 endfunction
 
@@ -16,9 +16,12 @@ endfunction
 "
 " only complete when the line is appropriate
 function! coc#source#syntax_test#complete(opt, cb) abort
-  let l:match = '\v^\s*\V' . b:syntax_test_comment . '\v\s*(\^+|\<-)'
-  " 0 (found) or -1 (not found)
-  if match(getline('.'), l:match)
+  if a:opt.filetype ==# 'syntax_test'
+        \ && a:opt.line !~# '\v^\s*\V' . b:syntax_test_comment . '\v\s*(\^+|\<-)'
+    return
+  endif
+  if a:opt.filetype ==# 'yaml'
+        \ && a:opt.line !~# '\v^ *-? (meta_)?scope: '
     return
   endif
   " lazy load

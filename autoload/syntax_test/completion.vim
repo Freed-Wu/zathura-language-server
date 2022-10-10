@@ -35,4 +35,6 @@ let s:plugin = {'Flag': funcref('s:Flag')}
 call s:plugin.Flag('g:syntax_test#completion#cache', s:cache)
 ""
 " Completion cache contents.
+"
+" www.sublimetext.com/docs/scope_naming.html
 call s:plugin.Flag('g:syntax_test#completion#items', s:items)

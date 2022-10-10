@@ -25,14 +25,17 @@
 ![github/repo-size](https://shields.io/github/repo-size/Freed-Wu/syntax-test.vim)
 ![github/v](https://shields.io/github/v/release/Freed-Wu/syntax-test.vim)
 
-Vim filetype plugin for [syntax-test](http://www.sublimetext.com/docs/syntax.html#testing).
+Vim filetype plugin for:
+
+- [sublime-syntax](http://www.sublimetext.com/docs/syntax.html)
+- [syntax-test](http://www.sublimetext.com/docs/syntax.html#testing)
 
 - [x] syntax highlight, include incorrect header
 - [x] ftplugin: commentstring, etc
 - [x] linter
 - [x] completion
 - [ ] document hover
-- [ ] support sublime-syntax
+- [ ] support [tmLanguage](https://macromates.com/manual/en/language_grammars)
 
 ![Screenshot](https://user-images.githubusercontent.com/32936898/194713936-8ea3403f-8133-4c75-876f-9d68bc145123.png)
 

@@ -16,6 +16,11 @@
 "       }
 "     }
 " <
+" If you use |coc-nvim|, remember >
+"     let g:coc_filetype_map = {
+"           \ 'sublime_syntax': 'yaml',
+"           \ }
+" <
 
 ""
 " Set b:syntax_test_syntax and b:syntax_test_comment,
