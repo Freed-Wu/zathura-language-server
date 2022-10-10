@@ -76,7 +76,7 @@ endfunction
 " NOTE: Don't check "SYNTAX CHECK" in the first line.
 function! coc#source#syntax_test#complete(opt, cb) abort
   " 0 (found) or -1 (not found)
-  if match(getline('.'), '\v^\s*\V' . b:comment . '\v\s*(\^+|\<-)')
+  if match(getline('.'), '\v^\s*\V' . b:syntax_test_comment . '\v\s*(\^+|\<-)')
     return
   endif
   let l:file = coc#source#syntax_test#get_syntax_file()
