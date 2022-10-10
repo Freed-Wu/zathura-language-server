@@ -18,10 +18,11 @@
 " <
 
 ""
-" set b:syntax_test_syntax and b:syntax_test_comment,
-" |rainbow_csv| detects |b:current_syntax|, so use a new variable
-" if filetype detect failed,
-" (e.g., |rainbow_csv| use |autocmd| |Syntax| to change filetype)
+" Set b:syntax_test_syntax and b:syntax_test_comment,
+" because |rainbow_csv| detects |b:current_syntax|, so use a new variable.
+"
+" If filetype detect fails,
+" (e.g., |rainbow_csv| uses |autocmd| |Syntax| to change filetype)
 " you can assign it manually. >
 "     call syntax_test#init('csv')
 " <

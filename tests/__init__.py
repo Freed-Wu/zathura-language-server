@@ -1,10 +1,11 @@
 """``{docs,tests}/__init__.py``."""
-import sys
 import os
 from os.path import dirname as dirn
+import sys
+from typing import Final
 
-__all__ = []
+__all__ = ["ROOTPATH"]
 
-rootpath = dirn(dirn(os.path.abspath(__file__)))
-path = os.path.join(rootpath, "rplugin/python3/syntax-test")
+ROOTPATH: Final = dirn(dirn(os.path.abspath(__file__)))
+path = os.path.join(ROOTPATH, "rplugin/python3")
 sys.path.insert(0, path)

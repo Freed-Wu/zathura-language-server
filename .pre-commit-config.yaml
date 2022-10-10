@@ -11,7 +11,7 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
       - id: end-of-file-fixer
-        exclude: ^examples/.*\.json$
+        exclude: ^assets/json/.*\.json$
       - id: detect-private-key
       - id: check-symlinks
       - id: check-ast
