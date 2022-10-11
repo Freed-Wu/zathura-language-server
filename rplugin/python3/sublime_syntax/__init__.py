@@ -1,4 +1,4 @@
-"""``syntax_test/__init__.py``."""
+"""``sublime_syntax/__init__.py``."""
 from contextlib import suppress
 
 __all__ = ["__version__"]

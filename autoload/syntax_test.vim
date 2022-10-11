@@ -12,12 +12,24 @@ function! syntax_test#init(...) abort
     let b:syntax_test_syntax = a:1
   else
     filetype detect
-    " b:current_syntax may not exist
-    " &syntax may be incorrect 'ON' when modeline change filetype
-    let b:syntax_test_syntax = empty(&filetype) ? expand('%:e') : &filetype
+    ""
+    " |b:current_syntax| may not exist.
+    " 'syntax' may be incorrect "ON" when modeline change filetype.
+    " So we use 'filetype'.
+    call g:sublime_syntax#utils#plugin.Flag('b:syntax_test_syntax',
+          \ empty(&filetype) ? expand('%:e') : &filetype
+          \ )
   endif
 
-  let b:syntax_test_comment = get(split(getline(1)), 0, '')
+  " https://github.com/google/vimdoc/issues/122
+  ""
+  " Use the first word of the first line to be default comment symbol.
+  " If the first line is blank, use 'commentstring'.
+  "
+  " http://www.sublimetext.com/docs/syntax.html#testing
+  call g:sublime_syntax#utils#plugin.Flag('b:syntax_test_comment',
+        \ get(split(getline(1)), 0, '')
+        \ )
   if empty(b:syntax_test_comment)
     let b:syntax_test_comment = get(split(&commentstring, '\s*%s'), 0, '#')
   endif

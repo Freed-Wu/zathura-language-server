@@ -26,3 +26,5 @@ jobs:
           ./requirements/test.txt
       - name: Test
         run: pytest
+      - name: Generate document
+        run: vimdoc .

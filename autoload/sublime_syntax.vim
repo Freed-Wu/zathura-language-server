@@ -23,45 +23,52 @@
 " <
 
 ""
-" Update cache.
-function! sublime_syntax#update_cache() abort
-  let l:cmd = 'python sys.argv = ' . string(['-c', s:cache])
+" Update cache. {cache_name} can be "syntax" or "scope".
+function! sublime_syntax#update_cache(cache_name) abort
+  let l:cache = s:cache_dir . '/' . a:cache_name . '.json'
+  let l:cmd = 'python sys.argv = ' . string(['-c', l:cache])
   execute l:cmd
-  silent execute 'pyfile' s:pyfile
+  silent execute 'pyfile' s:py_path . '/' . a:cache_name . '.py'
 endfunction
 
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
-let s:pyfile = s:path . '/rplugin/python3/sublime_syntax/__main__.py'
+let s:py_path = s:path . '/rplugin/python3/sublime_syntax'
 if exists('*stdpath')
   let s:cache_dir_home = stdpath('cache')
 else
   let s:cache_dir_home = $HOME . '/.cache/nvim'
 endif
-let s:cache_dir = s:cache_dir_home . '/sublime-syntax.vim'
+""
+" Completion cache directory.
+call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#cache_dir', s:cache_dir_home . '/sublime-syntax.vim')
+let s:cache_dir = g:sublime_syntax#cache_dir
 call mkdir(s:cache_dir, 'p')
-let s:cache = s:cache_dir . '/sublime-syntax.json'
-try
-  let s:items = json_decode(readfile(s:cache)[0])
-catch /\v^Vim%(\(\a+\))?:E(684|484|491):/
-  call sublime_syntax#update_cache()
-  let s:items = json_decode(readfile(s:cache)[0])
-endtry
-
+for s:cache_name in ['scope', 'syntax']
+  let s:cache = s:cache_dir . '/' . s:cache_name . '.json'
+  try
+    let s:{s:cache_name}_items = json_decode(readfile(s:cache)[0])
+  catch /\v^Vim%(\(\a+\))?:E(684|484|491):/
+    call sublime_syntax#update_cache(s:cache_name)
+    let s:{s:cache_name}_items = json_decode(readfile(s:cache)[0])
+  endtry
+endfor
 ""
-" @section Configuration, config
-
-function! s:Flag(name, default) abort
-  let l:scope = get(split(a:name, ':'), 0, 'g:')
-  let l:name = get(split(a:name, ':'), -1)
-  let g:{name} = get({l:scope}:, l:name, a:default)
-endfunction
-
-let s:plugin = {'Flag': funcref('s:Flag')}
-""
-" Completion cache path.
-call s:plugin.Flag('g:sublime_syntax#cache', s:cache)
-""
-" Completion cache contents.
+" Completion scope cache contents. For program.
 "
-" www.sublimetext.com/docs/scope_naming.html
-call s:plugin.Flag('g:sublime_syntax#items', s:items)
+" https://www.sublimetext.com/docs/scope_naming.html
+call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#scope_items', s:scope_items)
+""
+" Completion syntax cache contents. For program.
+"
+" https://www.sublimetext.com/docs/syntax.html
+call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#syntax_items', s:syntax_items)
+""
+" Syntax names. For program.
+call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#syntax_names',
+      \ map(s:syntax_items, {_, v -> v.word}) + ['variables', 'contexts']
+      \ )
+""
+" Scope names. For program.
+call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#scope_names',
+      \ map(s:scope_items, {_, v -> v.word})
+      \ )
