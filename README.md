@@ -87,7 +87,7 @@ install assets/json/*.json -Dt ~/.cache/nvim/sublime_syntax.vim
 
 A more intelligent completion needs LSP, which is a TODO.
 
-![Completion](https://user-images.githubusercontent.com/32936898/194894911-0da392fd-59af-429c-8683-d9ee06bc3963.png)
+![Completion](https://user-images.githubusercontent.com/32936898/195144562-35057022-db72-4484-8021-893a1a7c16a3.png)
 
 ## Linter
 

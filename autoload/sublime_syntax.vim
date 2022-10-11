@@ -65,10 +65,10 @@ call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#syntax_items', s:synta
 ""
 " Syntax names. For program.
 call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#syntax_names',
-      \ map(s:syntax_items, {_, v -> v.word}) + ['variables', 'contexts']
+      \ map(deepcopy(s:syntax_items), {_, v -> v.word}) + ['variables', 'contexts']
       \ )
 ""
 " Scope names. For program.
 call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#scope_names',
-      \ map(s:scope_items, {_, v -> v.word})
+      \ map(deepcopy(s:scope_items), {_, v -> v.word})
       \ )
