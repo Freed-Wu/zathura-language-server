@@ -30,7 +30,7 @@ function! sublime_syntax#update_cache() abort
   silent execute 'pyfile' s:pyfile
 endfunction
 
-let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h:h')
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let s:pyfile = s:path . '/rplugin/python3/sublime_syntax/__main__.py'
 if exists('*stdpath')
   let s:cache_dir_home = stdpath('cache')
