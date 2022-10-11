@@ -39,14 +39,11 @@ def main(output: str = ""):
         word = li.get_text().strip(".")
         items += [{"word": word, "info": info, "menu": "scope"}]
     for section in reference.find_all("section"):
-        top = section.get("id")
         for ul in section.find_all("ul"):
             p = ul.find_previous("p")
             info = p.get_text().replace("\n", " ").strip()
             for li in ul.find_all("li"):
                 word = li.get_text()
-                if word.split(".")[0] != top:
-                    continue
                 items += [{"word": word, "info": info, "menu": "scope"}]
     items.sort(key=lambda x: x["word"], reverse=True)
 
