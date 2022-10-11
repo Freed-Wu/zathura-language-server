@@ -48,6 +48,7 @@ def main(output: str = ""):
                 if word.split(".")[0] != top:
                     continue
                 items += [{"word": word, "info": info, "menu": "scope"}]
+    items.sort(key=lambda x: x["word"], reverse=True)
 
     if output == "-" or len(sys.argv) < 2:
         json.dump(items, sys.stdout)
