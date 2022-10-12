@@ -6,7 +6,7 @@ let b:current_syntax = 'sublime_syntax'
 set syntax=yaml
 
 execute 'syntax keyword sublimeSyntaxKeyword' join(g:sublime_syntax#syntax_names, ' ')
-execute 'syntax match sublimeSyntaxConstant `\v%(%(%(meta_)?scope|\d):\s*)@<=%(' . join(g:sublime_syntax#scope_names, '|') . ')>`'
+execute 'syntax match sublimeSyntaxConstant `\v%(' . join(g:sublime_syntax#scope_names, '|') . ')>`'
 syntax match sublimeSyntaxVariable `\v\{\{[a-z_]+\}\}` contained
 " monkey patch
 " make '- match' can be highlighted
