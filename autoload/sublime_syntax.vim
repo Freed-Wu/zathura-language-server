@@ -21,6 +21,11 @@
 "           \ 'sublime_syntax': 'yaml',
 "           \ }
 " <
+" If you use |nvim-treesitter|, remember: >
+"     -- https://github.com/nvim-treesitter/nvim-treesitter#adding-parsers
+"     local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+"     ft_to_parser.sublime_syntax = "yaml"
+" <
 
 ""
 " Update cache. {cache_name} can be "syntax" or "scope".
