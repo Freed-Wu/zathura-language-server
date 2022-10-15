@@ -37,17 +37,13 @@ If you use |coc-nvim|, remember:
 If you use |nvim-treesitter|, remember:
 >
     -- https://github.com/nvim-treesitter/nvim-treesitter#adding-parsers
-    local ft_to_parser = require"nvim-
-    treesitter.parsers".filetype_to_parsername
+    local ft_to_parser = \
+    require"nvim-treesitter.parsers".filetype_to_parsername
     ft_to_parser.sublime_syntax = "yaml"
 <
 
 ==============================================================================
 CONFIGURATION                                          *sublime-syntax-config*
-
-                                   *sublime-syntax:g:sublime_syntax#cache_dir*
-Completion cache directory.
-Default: s:cache_dir_home . '/sublime-syntax.vim' `
 
                                  *sublime-syntax:g:sublime_syntax#scope_items*
 Completion scope cache contents. For program.
@@ -87,9 +83,6 @@ coc#source#sublime_syntax#init()            *coc#source#sublime_syntax#init()*
 coc#source#sublime_syntax#complete({opt}, {cb})
                                         *coc#source#sublime_syntax#complete()*
   Only complete when the line is appropriate.
-
-sublime_syntax#update_cache({cache_name})      *sublime_syntax#update_cache()*
-  Update cache. {cache_name} can be "syntax" or "scope".
 
 syntax_test#init()                                        *syntax_test#init()*
   Set b:syntax_test_syntax and b:syntax_test_comment, because |rainbow_csv|

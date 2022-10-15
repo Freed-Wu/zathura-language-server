@@ -24,39 +24,17 @@
 " <
 " If you use |nvim-treesitter|, remember: >
 "     -- https://github.com/nvim-treesitter/nvim-treesitter#adding-parsers
-"     local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+"     local ft_to_parser = \
+"     require"nvim-treesitter.parsers".filetype_to_parsername
 "     ft_to_parser.sublime_syntax = "yaml"
 " <
 
-""
-" Update cache. {cache_name} can be "syntax" or "scope".
-function! sublime_syntax#update_cache(cache_name) abort
-  let l:cache = s:cache_dir . '/' . a:cache_name . '.json'
-  let l:cmd = 'python sys.argv = ' . string(['-c', l:cache])
-  execute l:cmd
-  silent execute 'pyfile' s:py_path . '/' . a:cache_name . '.py'
-endfunction
-
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
-let s:py_path = s:path . '/rplugin/python3/sublime_syntax'
-if exists('*stdpath')
-  let s:cache_dir_home = stdpath('cache')
-else
-  let s:cache_dir_home = $HOME . '/.cache/nvim'
-endif
-""
-" Completion cache directory.
-call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#cache_dir', s:cache_dir_home . '/sublime-syntax.vim')
-let s:cache_dir = g:sublime_syntax#cache_dir
+let s:cache_dir = s:path . '/assets/json'
 call mkdir(s:cache_dir, 'p')
 for s:cache_name in ['scope', 'syntax']
   let s:cache = s:cache_dir . '/' . s:cache_name . '.json'
-  try
-    let s:{s:cache_name}_items = json_decode(readfile(s:cache)[0])
-  catch /\v^Vim%(\(\a+\))?:E(684|484|491):/
-    call sublime_syntax#update_cache(s:cache_name)
-    let s:{s:cache_name}_items = json_decode(readfile(s:cache)[0])
-  endtry
+  let s:{s:cache_name}_items = json_decode(readfile(s:cache)[0])
 endfor
 ""
 " Completion scope cache contents. For program.

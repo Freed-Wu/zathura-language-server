@@ -84,3 +84,7 @@ repos:
     rev: v0.7.1a
     hooks:
       - id: vimdoc
+  - repo: https://github.com/Freed-Wu/pre-commit-make
+    rev: 0.0.1
+    hooks:
+      - id: make
