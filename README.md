@@ -1,6 +1,7 @@
-# syntax-test.vim
+# sublime-syntax.vim
 
 [![github/license](https://shields.io/github/license/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/blob/master/LICENSE)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Freed-Wu/sublime-syntax.vim/main.svg)](https://results.pre-commit.ci/latest/github/Freed-Wu/sublime-syntax.vim/main)
 
 [![github/downloads](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases)
 [![github/downloads/latest](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/latest/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases/latest)
@@ -40,16 +41,15 @@ Vim filetype plugin for:
 - [ ] LSP
 - [ ] support [tmLanguage](https://macromates.com/manual/en/language_grammars)
 
-<!-- mdformat-toc start --slug=github --no-anchors --maxlevel=6 --minlevel=1 -->
+<!-- mdformat-toc start --slug=github --no-anchors --maxlevel=6 --minlevel=2 -->
 
-- [syntax-test.vim](#syntax-testvim)
-  - [Syntax Highlight](#syntax-highlight)
-  - [Completion](#completion)
-  - [Linter](#linter)
-    - [Install syntest](#install-syntest)
-      - [Build From Source](#build-from-source)
-      - [For Archlinux](#for-archlinux)
-      - [Other Install Methods](#other-install-methods)
+- [Syntax Highlight](#syntax-highlight)
+- [Completion](#completion)
+- [Linter](#linter)
+  - [Install syntest](#install-syntest)
+    - [Build From Source](#build-from-source)
+    - [For Archlinux](#for-archlinux)
+    - [Other Install Methods](#other-install-methods)
 
 <!-- mdformat-toc end -->
 
