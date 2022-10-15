@@ -1,6 +1,5 @@
 # sublime-syntax.vim
 
-[![github/license](https://shields.io/github/license/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/blob/master/LICENSE)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Freed-Wu/sublime-syntax.vim/main.svg)](https://results.pre-commit.ci/latest/github/Freed-Wu/sublime-syntax.vim/main)
 
 [![github/downloads](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases)
@@ -19,6 +18,7 @@
 [![github/last-commit](https://shields.io/github/last-commit/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/commits)
 [![github/release-date](https://shields.io/github/release-date/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/releases/latest)
 
+[![github/license](https://shields.io/github/license/Freed-Wu/sublime-syntax.vim)](https://github.com/Freed-Wu/sublime-syntax.vim/blob/master/LICENSE)
 ![github/languages](https://shields.io/github/languages/count/Freed-Wu/sublime-syntax.vim)
 ![github/languages/top](https://shields.io/github/languages/top/Freed-Wu/sublime-syntax.vim)
 ![github/directory-file-count](https://shields.io/github/directory-file-count/Freed-Wu/sublime-syntax.vim)

@@ -88,3 +88,7 @@ repos:
     rev: 0.0.1
     hooks:
       - id: make
+
+ci:
+  skip:
+    - make
