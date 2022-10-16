@@ -34,25 +34,36 @@ let s:cache_dir = s:path . '/assets/json'
 call mkdir(s:cache_dir, 'p')
 for s:cache_name in ['scope', 'syntax']
   let s:cache = s:cache_dir . '/' . s:cache_name . '.json'
-  let s:{s:cache_name}_items = json_decode(readfile(s:cache)[0])
+  let s:{s:cache_name}_items = json_decode(join(readfile(s:cache), ''))
 endfor
 ""
 " Completion scope cache contents. For program.
 "
 " https://www.sublimetext.com/docs/scope_naming.html
+"
+" vint: next-line -ProhibitUsingUndeclaredVariable
 call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#scope_items', s:scope_items)
 ""
 " Completion syntax cache contents. For program.
 "
 " https://www.sublimetext.com/docs/syntax.html
+"
+" vint: next-line -ProhibitUsingUndeclaredVariable
 call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#syntax_items', s:syntax_items)
 ""
 " Syntax names. For program.
+"
+" vint: -ProhibitUsingUndeclaredVariable
 call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#syntax_names',
       \ map(deepcopy(s:syntax_items), {_, v -> v.word}) + ['variables', 'contexts']
       \ )
+" vint: +ProhibitUsingUndeclaredVariable
+
 ""
 " Scope names. For program.
+"
+" vint: -ProhibitUsingUndeclaredVariable
 call g:sublime_syntax#utils#plugin.Flag('g:sublime_syntax#scope_names',
       \ map(deepcopy(s:scope_items), {_, v -> v.word})
       \ )
+" vint: +ProhibitUsingUndeclaredVariable

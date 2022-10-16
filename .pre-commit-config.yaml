@@ -26,9 +26,11 @@ repos:
     hooks:
       - id: remove-crlf
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.1
+    rev: v2.2.2
     hooks:
       - id: codespell
+        additional_dependencies:
+          - tomli
   - repo: https://github.com/jorisroovers/gitlint
     rev: v0.17.0
     hooks:
@@ -75,11 +77,9 @@ repos:
     hooks:
       - id: pydocstyle
   - repo: https://github.com/vimjas/vint
-    rev: v0.4a3
+    rev: v0.4a4
     hooks:
       - id: vint
-        args:
-          - -e
   - repo: https://github.com/Freed-Wu/vimdoc
     rev: v0.7.1a
     hooks:

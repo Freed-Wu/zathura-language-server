@@ -49,19 +49,27 @@ CONFIGURATION                                          *sublime-syntax-config*
 Completion scope cache contents. For program.
 
 https://www.sublimetext.com/docs/scope_naming.html
+
+vint: next-line -ProhibitUsingUndeclaredVariable
 Default: s:scope_items `
 
                                 *sublime-syntax:g:sublime_syntax#syntax_items*
 Completion syntax cache contents. For program.
 
 https://www.sublimetext.com/docs/syntax.html
+
+vint: next-line -ProhibitUsingUndeclaredVariable
 Default: s:syntax_items `
 
                                 *sublime-syntax:g:sublime_syntax#syntax_names*
 Syntax names. For program.
 
+vint: -ProhibitUsingUndeclaredVariable
+
                                  *sublime-syntax:g:sublime_syntax#scope_names*
 Scope names. For program.
+
+vint: -ProhibitUsingUndeclaredVariable
 
                                          *sublime-syntax:b:syntax_test_syntax*
 |b:current_syntax| may not exist. 'syntax' may be incorrect "ON" when modeline
