@@ -1,0 +1,15 @@
+Describe syntax_test
+  Before all
+    edit examples/syntax_test_helphelp.txt
+    call syntax_test#init('help')
+  End
+  It check filetype
+    Assert Equals(&filetype, 'syntax_test')
+  End
+  It check b:syntax_test_comment
+    Assert Equals(b:syntax_test_comment, '#')
+  End
+  It check b:syntax_test_syntax
+    Assert Equals(b:syntax_test_syntax, 'help')
+  End
+End
