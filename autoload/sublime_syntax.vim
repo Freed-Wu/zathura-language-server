@@ -31,7 +31,6 @@
 
 let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 let s:cache_dir = s:path . '/assets/json'
-call mkdir(s:cache_dir, 'p')
 for s:cache_name in ['scope', 'syntax']
   let s:cache = s:cache_dir . '/' . s:cache_name . '.json'
   let s:{s:cache_name}_items = json_decode(join(readfile(s:cache), ''))
