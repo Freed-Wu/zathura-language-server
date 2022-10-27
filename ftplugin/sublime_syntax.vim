@@ -7,7 +7,7 @@ let b:did_ftplugin = 1
 let s:save_cpoptions = &cpoptions
 set cpoptions&vim
 
-let b:undo_ftplugin .= 'iskeyword<'
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', '') . 'iskeyword<'
 setlocal iskeyword+=-
 compiler bat
 
