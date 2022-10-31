@@ -1,7 +1,7 @@
 # sublime-syntax.vim
 
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Freed-Wu/sublime-syntax.vim/main.svg)](https://results.pre-commit.ci/latest/github/Freed-Wu/sublime-syntax.vim/main)
-[![github/workflow](https://shields.io/github/workflow/status/Freed-Wu/sublime-syntax.vim/vim)](https://github.com/Freed-Wu/sublime-syntax.vim/actions)
+[![github/workflow](https://shields.io/github/workflow/status/Freed-Wu/sublime-syntax.vim/main)](https://github.com/Freed-Wu/sublime-syntax.vim/actions)
 
 [![github/downloads](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases)
 [![github/downloads/latest](https://shields.io/github/downloads/Freed-Wu/sublime-syntax.vim/latest/total)](https://github.com/Freed-Wu/sublime-syntax.vim/releases/latest)
