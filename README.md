@@ -52,6 +52,7 @@ Vim filetype plugin for:
     - [Build From Source](#build-from-source)
     - [For Archlinux](#for-archlinux)
     - [Other Install Methods](#other-install-methods)
+- [License](#license)
 
 <!-- mdformat-toc end -->
 
@@ -120,6 +121,6 @@ yay -S syntest
 - [ ] Android (Termux)
 - [ ] Linux/macOS (Homebrew)
 
-
 ## License
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FFreed-Wu%2Fsublime-syntax.vim.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FFreed-Wu%2Fsublime-syntax.vim?ref=badge_large)
