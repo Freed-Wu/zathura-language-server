@@ -18,58 +18,9 @@ Note: if you use |indentLine|, remember:
 >
     let g:indentLine_fileTypeExclude = ['syntax_test']
 <
-If you use |coc-diagnostic|, remember:
->
-    {
-      "diagnostic-languageserver": {
-        "filetypes": {
-          "syntax_test": "syntest"
-        }
-      }
-    }
-<
-If you use |coc-nvim|, remember:
->
-    let g:coc_filetype_map = {
-          \ 'sublime_syntax': 'yaml',
-          \ }
-<
-If you use |nvim-treesitter|, remember:
->
-    -- https://github.com/nvim-treesitter/nvim-treesitter#adding-parsers
-    local ft_to_parser = \
-    require"nvim-treesitter.parsers".filetype_to_parsername
-    ft_to_parser.sublime_syntax = "yaml"
-<
 
 ==============================================================================
 CONFIGURATION                                          *sublime-syntax-config*
-
-                                 *sublime-syntax:g:sublime_syntax#scope_items*
-Completion scope cache contents. For program.
-
-https://www.sublimetext.com/docs/scope_naming.html
-
-vint: next-line -ProhibitUsingUndeclaredVariable
-Default: s:scope_items `
-
-                                *sublime-syntax:g:sublime_syntax#syntax_items*
-Completion syntax cache contents. For program.
-
-https://www.sublimetext.com/docs/syntax.html
-
-vint: next-line -ProhibitUsingUndeclaredVariable
-Default: s:syntax_items `
-
-                                *sublime-syntax:g:sublime_syntax#syntax_names*
-Syntax names. For program.
-
-vint: -ProhibitUsingUndeclaredVariable
-
-                                 *sublime-syntax:g:sublime_syntax#scope_names*
-Scope names. For program.
-
-vint: -ProhibitUsingUndeclaredVariable
 
                                          *sublime-syntax:b:syntax_test_syntax*
 |b:current_syntax| may not exist. 'syntax' may be incorrect "ON" when modeline
@@ -84,13 +35,6 @@ http://www.sublimetext.com/docs/syntax.html#testing
 
 ==============================================================================
 FUNCTIONS                                           *sublime-syntax-functions*
-
-coc#source#sublime_syntax#init()            *coc#source#sublime_syntax#init()*
-  https://github.com/neoclide/coc.nvim/wiki/Create-custom-source
-
-coc#source#sublime_syntax#complete({opt}, {cb})
-                                        *coc#source#sublime_syntax#complete()*
-  Only complete when the line is appropriate.
 
 syntax_test#init()                                        *syntax_test#init()*
   Set b:syntax_test_syntax and b:syntax_test_comment, because |rainbow_csv|

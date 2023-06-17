@@ -1,6 +1,6 @@
 Describe syntax_test
   Before all
-    edit examples/syntax_test_helphelp.txt
+    edit test/syntax_test_helphelp.txt
     call syntax_test#init('help')
   End
   It check filetype
