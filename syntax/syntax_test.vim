@@ -1,14 +1,4 @@
-if exists('b:current_syntax') && b:current_syntax =~# 'syntax_test'
-  finish
-endif
-if get(b:, 'current_syntax')
-  let b:current_syntax = b:current_syntax . '.syntax_test'
-else
-  let b:current_syntax = 'syntax_test'
-endif
-
-call syntax_test#detect()
-let &syntax = b:syntax_test_syntax
+let b:current_syntax = split(&filetype, '\.')[0] . '.syntax_test'
 
 syntax case match
 execute 'syntax match syntaxTestComment `\v^\s*\V' . b:syntax_test_comment . '\v.*$` contains=syntaxTestInclude,syntaxTestIncluded,syntaxTestCaretOrArrow,syntaxTestScope,syntaxTestNotScope'

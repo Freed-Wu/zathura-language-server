@@ -5,7 +5,9 @@ let b:undo_ftplugin =
       \ 'setl commentstring< modeline< conceallevel< modifiable< readonly<'
       \ . ' buftype< iskeyword< tabstop< shiftwidth< expandtab< formatoptions<'
 
-call syntax_test#detect()
+if !exists('b:current_syntax') || !exists('b:syntax_test_comment')
+  call syntax_test#init()
+endif
 let &commentstring = b:syntax_test_comment . '%s'
 setlocal nomodeline
 " some filetypes are nomodifiable by their ftplugin

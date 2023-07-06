@@ -4,12 +4,12 @@ Describe syntax_test
     call syntax_test#init('help')
   End
   It check filetype
-    Assert Equals(&filetype, 'syntax_test')
+    Assert Equals(&filetype, 'help.syntax_test')
   End
   It check b:syntax_test_comment
     Assert Equals(b:syntax_test_comment, '#')
   End
-  It check b:syntax_test_syntax
-    Assert Equals(b:syntax_test_syntax, 'help')
+  It check b:current_syntax
+    Assert Equals(b:current_syntax, 'help')
   End
 End

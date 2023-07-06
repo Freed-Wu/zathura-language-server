@@ -10,28 +10,17 @@
 " <
 
 ""
-" Set b:syntax_test_syntax and b:syntax_test_comment,
-" because |rainbow_csv| detects |b:current_syntax|, so use a new variable.
+" Set b:current_syntax and b:syntax_test_comment,
 "
 " If filetype detect fails,
 " (e.g., |rainbow_csv| uses |autocmd| |Syntax| to change filetype)
 " you can assign it manually. >
 "     call syntax_test#init('csv')
 " <
+"
+" Use |b:current_syntax|'s language server.
+" Source |b:current_syntax|'s syntax, then source syntax_test's syntax.
 function! syntax_test#init(...) abort
-  if a:0 == 1
-    let b:syntax_test_syntax = a:1
-  else
-    filetype detect
-    ""
-    " |b:current_syntax| may not exist.
-    " 'syntax' may be incorrect "ON" when modeline change filetype.
-    " So we use 'filetype'.
-    call g:sublime_syntax#utils#plugin.Flag('b:syntax_test_syntax',
-          \ empty(&filetype) ? expand('%:e') : &filetype
-          \ )
-  endif
-
   " https://github.com/google/vimdoc/issues/122
   ""
   " Use the first word of the first line to be default comment symbol.
@@ -44,14 +33,16 @@ function! syntax_test#init(...) abort
   if empty(b:syntax_test_comment)
     let b:syntax_test_comment = get(split(&commentstring, '\s*%s'), 0, '#')
   endif
-  set filetype=syntax_test
-endfunction
 
-""
-" if b:syntax_test_syntax or b:syntax_test_comment doesn't exist,
-" call |syntax_test#init()|. if they exist, do nothing.
-function! syntax_test#detect() abort
-  if !exists('b:syntax_test_syntax') || !exists('b:syntax_test_comment')
-    call syntax_test#init()
+  if a:0 == 1
+    let b:current_syntax = a:1
+  else
+    filetype detect
+    " 'syntax' may be incorrect "ON" when modeline change filetype.
+    " So we use 'filetype'.
+    if ! exists('b:current_syntax')
+      let b:current_syntax = empty(&filetype) ? expand('%:e') : &filetype
+    endif
   endif
+  execute 'set filetype=' . b:current_syntax . '.syntax_test'
 endfunction

@@ -22,11 +22,6 @@ Note: if you use |indentLine|, remember:
 ==============================================================================
 CONFIGURATION                                          *sublime-syntax-config*
 
-                                         *sublime-syntax:b:syntax_test_syntax*
-|b:current_syntax| may not exist. 'syntax' may be incorrect "ON" when modeline
-change filetype. So we use 'filetype'.
-Default: empty(&filetype) ? expand('%:e') : &filetype `
-
                                         *sublime-syntax:b:syntax_test_comment*
 Use the first word of the first line to be default comment symbol. If the
 first line is blank, use 'commentstring'.
@@ -37,8 +32,7 @@ http://www.sublimetext.com/docs/syntax.html#testing
 FUNCTIONS                                           *sublime-syntax-functions*
 
 syntax_test#init()                                        *syntax_test#init()*
-  Set b:syntax_test_syntax and b:syntax_test_comment, because |rainbow_csv|
-  detects |b:current_syntax|, so use a new variable.
+  Set b:current_syntax and b:syntax_test_comment,
 
   If filetype detect fails, (e.g., |rainbow_csv| uses |autocmd| |Syntax| to
   change filetype) you can assign it manually.
@@ -46,9 +40,8 @@ syntax_test#init()                                        *syntax_test#init()*
       call syntax_test#init('csv')
 <
 
-syntax_test#detect()                                    *syntax_test#detect()*
-  if b:syntax_test_syntax or b:syntax_test_comment doesn't exist, call
-  |syntax_test#init()|. if they exist, do nothing.
+  Use |b:current_syntax|'s language server. Source |b:current_syntax|'s
+  syntax, then source syntax_test's syntax.
 
 
 vim:tw=78:ts=8:ft=help:norl:
