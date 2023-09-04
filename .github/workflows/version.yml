@@ -1,0 +1,50 @@
+---
+"on":
+  push:
+    paths:
+      - "*.vim"
+  workflow_dispatch:
+
+# https://github.com/softprops/action-gh-release/issues/236
+permissions:
+  contents: write
+
+env:
+  PYTHONUTF8: "1"
+  python-version: 3.x
+  cache: pip
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # https://github.com/orgs/community/discussions/25702
+          persist-credentials: false
+      - uses: actions/checkout@v3
+        with:
+          # https://github.com/orgs/community/discussions/25702
+          persist-credentials: false
+          ref: release
+          path: release
+      - uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          neovim: true
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{env.python-version}}
+          cache: ${{env.cache}}
+          cache-dependency-path: |-
+            requirements.txt
+            requirements/dev.txt
+      - name: Install dependencies
+        run: |
+          pip install -e '.[dev]'
+      - name: Update version
+        id: version
+        run: |
+          scripts/git-commit.sh
+        env:
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
