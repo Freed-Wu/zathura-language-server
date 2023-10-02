@@ -1,4 +1,4 @@
 augroup zathurarc
   autocmd!
-  autocmd BufNewFile,BufRead zathurarc setfiletype zathurarc
+  autocmd BufNewFile,BufRead zathurarc,zathura-* setfiletype zathurarc
 augroup END
