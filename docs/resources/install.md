@@ -3,45 +3,13 @@
 ## [AUR](https://aur.archlinux.org/packages/zathura-language-server)
 
 ```sh
-yay -S zathura-language-server
+paru -S zathura-language-server
 ```
 
 ## [NUR](https://nur.nix-community.org/repos/Freed-Wu)
 
-```nix
-{ config, pkgs, ... }:
-{
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import
-      (
-        builtins.fetchTarball
-          "https://github.com/nix-community/NUR/archive/master.tar.gz"
-      )
-      {
-        inherit pkgs;
-      };
-  };
-  environment.systemPackages = with pkgs;
-      (
-        python3.withPackages (
-          p: with p; [
-            nur.repos.Freed-Wu.zathura-language-server
-          ]
-        )
-      )
-}
-```
-
-## [Nix](https://nixos.org)
-
 ```sh
-nix shell github:Freed-Wu/zathura-language-server
-```
-
-Run without installation:
-
-```sh
-nix run github:Freed-Wu/zathura-language-server -- --help
+nix-env -iA nixos.nur.repos.Freed-Wu.zathura-language-server
 ```
 
 ## [PYPI](https://pypi.org/project/zathura-language-server)
