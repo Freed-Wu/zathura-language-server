@@ -6,7 +6,7 @@ let b:did_ftplugin = 1
 let s:save_cpoptions = &cpoptions
 set cpoptions&vim
 
-let b:undo_ftplugin = 'setlocal comments< commentstring< include< islocked<'
+let b:undo_ftplugin = 'setlocal comments< commentstring< include< iskeyword<'
 setlocal comments=:#
 setlocal commentstring=#\ %s
 setlocal include=^\sinclude
