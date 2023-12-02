@@ -6,11 +6,14 @@ from typing import Any
 
 from lsprotocol.types import (
     TEXT_DOCUMENT_COMPLETION,
+    TEXT_DOCUMENT_DID_CHANGE,
+    TEXT_DOCUMENT_DID_OPEN,
     TEXT_DOCUMENT_HOVER,
     CompletionItem,
     CompletionItemKind,
     CompletionList,
     CompletionParams,
+    DidChangeTextDocumentParams,
     Hover,
     MarkupContent,
     MarkupKind,
@@ -19,7 +22,10 @@ from lsprotocol.types import (
     TextDocumentPositionParams,
 )
 from pygls.server import LanguageServer
+from tree_sitter_lsp.diagnose import get_diagnostics
+from tree_sitter_zathurarc import parser
 
+from .finders import DIAGNOSTICS_FINDER_CLASSES
 from .utils import get_schema
 
 
@@ -34,6 +40,26 @@ class ZathuraLanguageServer(LanguageServer):
         :rtype: None
         """
         super().__init__(*args)
+        self.trees = {}
+
+        @self.feature(TEXT_DOCUMENT_DID_OPEN)
+        @self.feature(TEXT_DOCUMENT_DID_CHANGE)
+        def did_change(params: DidChangeTextDocumentParams) -> None:
+            r"""Did change.
+
+            :param params:
+            :type params: DidChangeTextDocumentParams
+            :rtype: None
+            """
+            document = self.workspace.get_document(params.text_document.uri)
+            self.trees[document.uri] = parser.parse(document.source.encode())
+            diagnostics = get_diagnostics(
+                document.uri,
+                self.trees[document.uri],
+                DIAGNOSTICS_FINDER_CLASSES,
+                "zathurarc",
+            )
+            self.publish_diagnostics(params.text_document.uri, diagnostics)
 
         @self.feature(TEXT_DOCUMENT_HOVER)
         def hover(params: TextDocumentPositionParams) -> Hover | None:
