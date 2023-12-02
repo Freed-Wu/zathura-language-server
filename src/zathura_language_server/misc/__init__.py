@@ -15,4 +15,4 @@ def get_schema(filetype: FILETYPE = "zathurarc") -> dict[str, Any]:
     """
     from .zathurarc import init_schema
 
-    return init_schema()
+    return init_schema()[filetype]

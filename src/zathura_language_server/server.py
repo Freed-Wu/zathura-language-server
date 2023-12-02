@@ -48,11 +48,17 @@ class ZathuraLanguageServer(LanguageServer):
             )
             if not word:
                 return None
-            result = get_schema().get(word[0])
+            result = get_schema()["properties"].get(word[0])
             if not result:
-                return None
+                result = get_schema()["properties"]["set"]["properties"].get(
+                    word[0]
+                )
+                if not result:
+                    return None
             return Hover(
-                contents=MarkupContent(kind=MarkupKind.Markdown, value=result),
+                contents=MarkupContent(
+                    kind=MarkupKind.Markdown, value=result["description"]
+                ),
                 range=word[1],
             )
 
@@ -77,7 +83,8 @@ class ZathuraLanguageServer(LanguageServer):
                         else CompletionItemKind.Function
                     ),
                     documentation=MarkupContent(
-                        kind=MarkupKind.Markdown, value=get_schema().get(x, "")
+                        kind=MarkupKind.Markdown,
+                        value=get_schema().get(x, {}).get("description", ""),
                     ),
                     insert_text=x,
                 )
