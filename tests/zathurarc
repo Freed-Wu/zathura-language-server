@@ -1,0 +1,7 @@
+# test
+include desktop/zathurarc
+map [normal] <Esc> zoom in#with argument
+map <F1> recolor          #without argument
+set recolor false
+unmap <F1>
+unmap [normal] <Esc>

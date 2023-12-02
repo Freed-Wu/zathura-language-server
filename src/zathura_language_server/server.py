@@ -1,13 +1,10 @@
 r"""Server
 ==========
 """
-import json
-import os
 import re
-from typing import Any, Literal, Tuple
+from typing import Any
 
 from lsprotocol.types import (
-    INITIALIZE,
     TEXT_DOCUMENT_COMPLETION,
     TEXT_DOCUMENT_HOVER,
     CompletionItem,
@@ -15,53 +12,15 @@ from lsprotocol.types import (
     CompletionList,
     CompletionParams,
     Hover,
-    InitializeParams,
     MarkupContent,
     MarkupKind,
     Position,
     Range,
     TextDocumentPositionParams,
 )
-from platformdirs import user_cache_dir
 from pygls.server import LanguageServer
 
-
-def get_document(
-    method: Literal["builtin", "cache", "system"] = "builtin"
-) -> dict[str, str]:
-    r"""Get document. ``builtin`` will use builtin zathura.json. ``cache``
-    will generate a cache from ``${XDG_CACHE_DIRS:-/usr/share}
-    /man/man5/zathurarc.5.gz``. ``system`` is same as ``cache`` except it
-    doesn't generate cache. We use ``builtin`` as default.
-
-    :param method:
-    :type method: Literal["builtin", "cache", "system"]
-    :rtype: dict[str, str]
-    """
-    if method == "builtin":
-        file = os.path.join(
-            os.path.join(
-                os.path.join(os.path.dirname(__file__), "assets"), "json"
-            ),
-            "zathura.json",
-        )
-        with open(file, "r") as f:
-            document = json.load(f)
-    elif method == "cache":
-        from .api import init_document
-
-        if not os.path.exists(user_cache_dir("zathura.json")):
-            document = init_document()
-            with open(user_cache_dir("zathura.json"), "w") as f:
-                json.dump(document, f)
-        else:
-            with open(user_cache_dir("zathura.json"), "r") as f:
-                document = json.load(f)
-    else:
-        from .api import init_document
-
-        document = init_document()
-    return document
+from .utils import get_schema
 
 
 class ZathuraLanguageServer(LanguageServer):
@@ -75,19 +34,6 @@ class ZathuraLanguageServer(LanguageServer):
         :rtype: None
         """
         super().__init__(*args)
-        self.document = {}
-
-        @self.feature(INITIALIZE)
-        def initialize(params: InitializeParams) -> None:
-            r"""Initialize.
-
-            :param params:
-            :type params: InitializeParams
-            :rtype: None
-            """
-            opts = params.initialization_options
-            method = getattr(opts, "method", "builtin")
-            self.document = get_document(method)  # type: ignore
 
         @self.feature(TEXT_DOCUMENT_HOVER)
         def hover(params: TextDocumentPositionParams) -> Hover | None:
@@ -102,7 +48,7 @@ class ZathuraLanguageServer(LanguageServer):
             )
             if not word:
                 return None
-            result = self.document.get(word[0])
+            result = get_schema().get(word[0])
             if not result:
                 return None
             return Hover(
@@ -127,15 +73,15 @@ class ZathuraLanguageServer(LanguageServer):
                     label=x,
                     kind=(
                         CompletionItemKind.Constant
-                        if self.document[x].startswith(":")
+                        if get_schema().get(x, "").startswith(":")
                         else CompletionItemKind.Function
                     ),
                     documentation=MarkupContent(
-                        kind=MarkupKind.Markdown, value=self.document[x]
+                        kind=MarkupKind.Markdown, value=get_schema().get(x, "")
                     ),
                     insert_text=x,
                 )
-                for x in self.document
+                for x in get_schema()
                 if x.startswith(token)
             ]
             return CompletionList(is_incomplete=False, items=items)
@@ -159,7 +105,7 @@ class ZathuraLanguageServer(LanguageServer):
         uri: str,
         position: Position,
         include_all: bool = True,
-    ) -> Tuple[str, Range] | None:
+    ) -> tuple[str, Range] | None:
         r"""Cursor word.
 
         :param uri:
@@ -168,7 +114,7 @@ class ZathuraLanguageServer(LanguageServer):
         :type position: Position
         :param include_all:
         :type include_all: bool
-        :rtype: Tuple[str, Range] | None
+        :rtype: tuple[str, Range] | None
         """
         pat = r"[a-z_-]+"
         line = self._cursor_line(uri, position)
