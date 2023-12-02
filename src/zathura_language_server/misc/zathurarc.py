@@ -86,7 +86,12 @@ def init_schema() -> dict[str, Any]:
                 ):
                     schemas[filetype]["properties"]["set"]["properties"][
                         keyword
-                    ] = {"description": token.content.lstrip(": ")}
+                    ] = {
+                        "description": " ".join(
+                            line.strip()
+                            for line in token.content.lstrip(": ").splitlines()
+                        )
+                    }
                     continue
                 for line in token.content.splitlines():
                     if line.find("Value type: ") != -1:
@@ -116,10 +121,37 @@ def init_schema() -> dict[str, Any]:
                         schemas[filetype]["properties"]["set"]["properties"][
                             keyword
                         ]["default"] = default
-        schemas[filetype]["properties"]["set"]["properties"][keyword][
-            "description"
-        ] = schemas[filetype]["properties"]["set"]["properties"][keyword][
-            "description"
-        ].strip()
+                        if isinstance(default, str) and default.startswith(
+                            "#"
+                        ):
+                            schemas[filetype]["properties"]["set"][
+                                "properties"
+                            ][keyword]["format"] = "color"
+    schemas[filetype]["properties"]["set"]["properties"]["guioptions"][
+        "pattern"
+    ] = r"[cshv]*"
+    schemas[filetype]["properties"]["set"]["properties"]["database"][
+        "enum"
+    ] = ["plain", "sqlite", "null"]
+    schemas[filetype]["properties"]["set"]["properties"]["adjust-open"][
+        "enum"
+    ] = ["best-fit", "width"]
+    schemas[filetype]["properties"]["set"]["properties"]["filemonitor"][
+        "enum"
+    ] = ["glib", "signal", "noop"]
+    schemas[filetype]["properties"]["set"]["properties"][
+        "highlight-transparency"
+    ] |= {"minimum": 0, "maximum": 1}
+    schemas[filetype]["properties"]["set"]["properties"]["first-page-column"][
+        "pattern"
+    ] = r"\d+(:\d+)*"
+    schemas[filetype]["properties"]["set"]["properties"][
+        "selection-clipboard"
+    ]["enum"] = ["clipboard", "primary"]
+    schemas[filetype]["properties"]["set"]["properties"]["sandbox"]["enum"] = [
+        "none",
+        "normal",
+        "strict",
+    ]
 
     return schemas

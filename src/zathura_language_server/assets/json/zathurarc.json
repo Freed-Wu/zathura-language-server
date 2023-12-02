@@ -14,47 +14,55 @@
           "default": 15
         },
         "completion-bg": {
-          "description": "Defines the background color that is used for command line\n    completion entries",
+          "description": "Defines the background color that is used for command line completion entries",
           "type": "string",
-          "default": "#232323"
+          "default": "#232323",
+          "format": "color"
         },
         "completion-fg": {
-          "description": "Defines the foreground color that is used for command line\n    completion entries",
+          "description": "Defines the foreground color that is used for command line completion entries",
           "type": "string",
-          "default": "#DDDDDD"
+          "default": "#DDDDDD",
+          "format": "color"
         },
         "completion-group-bg": {
-          "description": "Defines the background color that is used for command line\n    completion group elements",
+          "description": "Defines the background color that is used for command line completion group elements",
           "type": "string",
-          "default": "#000000"
+          "default": "#000000",
+          "format": "color"
         },
         "completion-group-fg": {
-          "description": "Defines the foreground color that is used for command line\n    completion group elements",
+          "description": "Defines the foreground color that is used for command line completion group elements",
           "type": "string",
-          "default": "#DEDEDE"
+          "default": "#DEDEDE",
+          "format": "color"
         },
         "completion-highlight-bg": {
-          "description": "Defines the background color that is used for the current command\n    line completion element",
+          "description": "Defines the background color that is used for the current command line completion element",
           "type": "string",
-          "default": "#9FBC00"
+          "default": "#9FBC00",
+          "format": "color"
         },
         "completion-highlight-fg": {
-          "description": "Defines the foreground color that is used for the current command\n    line completion element",
+          "description": "Defines the foreground color that is used for the current command line completion element",
           "type": "string",
-          "default": "#232323"
+          "default": "#232323",
+          "format": "color"
         },
         "default-fg": {
           "description": "Defines the default foreground color",
           "type": "string",
-          "default": "#DDDDDD"
+          "default": "#DDDDDD",
+          "format": "color"
         },
         "default-bg": {
           "description": "Defines the default background color",
           "type": "string",
-          "default": "#000000"
+          "default": "#000000",
+          "format": "color"
         },
         "exec-command": {
-          "description": "Defines a command the should be prepended to any command run with\n    exec.",
+          "description": "Defines a command the should be prepended to any command run with exec.",
           "type": "string"
         },
         "font": {
@@ -63,62 +71,73 @@
           "default": "monospace normal 9"
         },
         "guioptions": {
-          "description": "Shows or hides GUI elements. If it contains \\'c\\', the command\n    line is displayed. If it contains \\'s\\', the statusbar is\n    displayed. If it contains \\'h\\', the horizontal scrollbar is\n    displayed. If it contains \\'v\\', the vertical scrollbar is\n    displayed.",
+          "description": "Shows or hides GUI elements. If it contains \\'c\\', the command line is displayed. If it contains \\'s\\', the statusbar is displayed. If it contains \\'h\\', the horizontal scrollbar is displayed. If it contains \\'v\\', the vertical scrollbar is displayed.",
           "type": "string",
-          "default": "s"
+          "default": "s",
+          "pattern": "[cshv]*"
         },
         "inputbar-bg": {
           "description": "Defines the background color for the inputbar",
           "type": "string",
-          "default": "#131313"
+          "default": "#131313",
+          "format": "color"
         },
         "inputbar-fg": {
           "description": "Defines the foreground color for the inputbar",
           "type": "string",
-          "default": "#9FBC00"
+          "default": "#9FBC00",
+          "format": "color"
         },
         "notification-bg": {
           "description": "Defines the background color for a notification",
           "type": "string",
-          "default": "#FFFFFF"
+          "default": "#FFFFFF",
+          "format": "color"
         },
         "notification-fg": {
           "description": "Defines the foreground color for a notification",
           "type": "string",
-          "default": "#000000"
+          "default": "#000000",
+          "format": "color"
         },
         "notification-error-bg": {
           "description": "Defines the background color for an error notification",
           "type": "string",
-          "default": "#FFFFFF"
+          "default": "#FFFFFF",
+          "format": "color"
         },
         "notification-error-fg": {
           "description": "Defines the foreground color for an error notification",
           "type": "string",
-          "default": "#FF1212"
+          "default": "#FF1212",
+          "format": "color"
         },
         "notification-warning-bg": {
           "description": "Defines the background color for a warning notification",
           "type": "string",
-          "default": "#FFFFFF"
+          "default": "#FFFFFF",
+          "format": "color"
         },
         "notification-warning-fg": {
           "description": "Defines the foreground color for a warning notification",
           "type": "string",
-          "default": "#FFF712"
+          "default": "#FFF712",
+          "format": "color"
         },
         "statusbar-bg": {
           "description": "Defines the background color of the statusbar",
           "type": "string",
-          "default": "#000000"
+          "default": "#000000",
+          "format": "color"
         },
         "statusbar-fg": {
           "description": "Defines the foreground color of the statusbar",
           "type": "string",
-          "default": "#FFFFFF"
+          "default": "#FFFFFF",
+          "format": "color"
         },
         "statusbar-h-padding": {
-          "description": "Defines the horizontal padding of the statusbar and\n    notificationbar",
+          "description": "Defines the horizontal padding of the statusbar and notificationbar",
           "type": "integer",
           "default": 8
         },
@@ -147,39 +166,53 @@
           "default": true
         },
         "adjust-open": {
-          "description": "Defines which auto adjustment mode should be used if a document is\n    loaded. Possible options are \\\"best-fit\\\" and \\\"width\\\".",
+          "description": "Defines which auto adjustment mode should be used if a document is loaded. Possible options are \\\"best-fit\\\" and \\\"width\\\".",
           "type": "string",
-          "default": "best-fit"
+          "default": "best-fit",
+          "enum": [
+            "best-fit",
+            "width"
+          ]
         },
         "advance-pages-per-row": {
-          "description": "Defines if the number of pages per row should be honored when\n    advancing a page.",
+          "description": "Defines if the number of pages per row should be honored when advancing a page.",
           "type": "boolean",
           "default": false
         },
         "continuous-hist-save": {
-          "description": "Tells zathura whether to save document history at each page change\n    or only when closing a document.",
+          "description": "Tells zathura whether to save document history at each page change or only when closing a document.",
           "type": "boolean",
           "default": false
         },
         "database": {
-          "description": "Defines the database backend to use for bookmarks and input\n    history. Possible values are \\\"plain\\\", \\\"sqlite\\\" (if built with\n    sqlite support) and \\\"null\\\". If \\\"null\\\" is used, bookmarks and\n    input history will not be stored.",
+          "description": "Defines the database backend to use for bookmarks and input history. Possible values are \\\"plain\\\", \\\"sqlite\\\" (if built with sqlite support) and \\\"null\\\". If \\\"null\\\" is used, bookmarks and input history will not be stored.",
           "type": "string",
-          "default": "plain"
+          "default": "plain",
+          "enum": [
+            "plain",
+            "sqlite",
+            "null"
+          ]
         },
         "dbus-service": {
-          "description": "En/Disables the D-Bus service. If the services is disabled,\n    SyncTeX forward synchronization is not available.",
+          "description": "En/Disables the D-Bus service. If the services is disabled, SyncTeX forward synchronization is not available.",
           "type": "boolean",
           "default": true
         },
         "dbus-raise-window": {
-          "description": "Defines whether zathura\\'s window should be raised when receiving\n    certain commands via D-Bus.",
+          "description": "Defines whether zathura\\'s window should be raised when receiving certain commands via D-Bus.",
           "type": "boolean",
           "default": true
         },
         "filemonitor": {
-          "description": "Defines the file monitor backend used to check for changes in\n    files. Possible values are \\\"glib\\\", \\\"signal\\\" (if signal\n    handling is supported), and \\\"noop\\\". The \\\"noop\\\" file monitor\n    does not trigger reloads.",
+          "description": "Defines the file monitor backend used to check for changes in files. Possible values are \\\"glib\\\", \\\"signal\\\" (if signal handling is supported), and \\\"noop\\\". The \\\"noop\\\" file monitor does not trigger reloads.",
           "type": "string",
-          "default": "glib"
+          "default": "glib",
+          "enum": [
+            "glib",
+            "signal",
+            "noop"
+          ]
         },
         "incremental-search": {
           "description": "En/Disables incremental search (search while typing).",
@@ -187,49 +220,55 @@
           "default": true
         },
         "highlight-color": {
-          "description": "Defines the color that is used for highlighting parts of the\n    document (e.g.: show search results)",
+          "description": "Defines the color that is used for highlighting parts of the document (e.g.: show search results)",
           "type": "string",
-          "default": "#9FBC00"
+          "default": "#9FBC00",
+          "format": "color"
         },
         "highlight-fg": {
-          "description": "Defines the color that is used for text when highlighting parts of\n    the document (e.g.: number for links).",
+          "description": "Defines the color that is used for text when highlighting parts of the document (e.g.: number for links).",
           "type": "string",
-          "default": "#9FBC00"
+          "default": "#9FBC00",
+          "format": "color"
         },
         "highlight-active-color": {
-          "description": "Defines the color that is used to show the current selected\n    highlighted element (e.g: current search result)",
+          "description": "Defines the color that is used to show the current selected highlighted element (e.g: current search result)",
           "type": "string",
-          "default": "#00BC00"
+          "default": "#00BC00",
+          "format": "color"
         },
         "highlight-transparency": {
           "description": "Defines the opacity of a highlighted element",
           "type": "number",
-          "default": 0.5
+          "default": 0.5,
+          "minimum": 0,
+          "maximum": 1
         },
         "page-padding": {
-          "description": "The page padding defines the gap in pixels between each rendered\n    page.",
+          "description": "The page padding defines the gap in pixels between each rendered page.",
           "type": "integer",
           "default": 1
         },
         "page-cache-size": {
-          "description": "Defines the maximum number of pages that could be kept in the page\n    cache. When the cache is full and a new page that isn\\'t cached\n    becomes visible, the least recently viewed page in the cache will\n    be evicted to make room for the new one. Large values for this\n    variable are NOT recommended, because this will lead to consuming\n    a significant portion of the system memory.",
+          "description": "Defines the maximum number of pages that could be kept in the page cache. When the cache is full and a new page that isn\\'t cached becomes visible, the least recently viewed page in the cache will be evicted to make room for the new one. Large values for this variable are NOT recommended, because this will lead to consuming a significant portion of the system memory.",
           "type": "integer",
           "default": 15
         },
         "page-thumbnail-size": {
-          "description": "Defines the maximum size in pixels of the thumbnail that could be\n    kept in the thumbnail cache per page. The thumbnail is scaled for\n    a quick preview during zooming before the page is rendered. When\n    the page is rendered, the result is saved as the thumbnail only if\n    the size is no more than this value. A larger value increases\n    quality but introduces longer delay in zooming and uses more\n    system memory.",
+          "description": "Defines the maximum size in pixels of the thumbnail that could be kept in the thumbnail cache per page. The thumbnail is scaled for a quick preview during zooming before the page is rendered. When the page is rendered, the result is saved as the thumbnail only if the size is no more than this value. A larger value increases quality but introduces longer delay in zooming and uses more system memory.",
           "type": "integer",
           "default": 4194304
         },
         "pages-per-row": {
-          "description": "Defines the number of pages that are rendered next to each other\n    in a row.",
+          "description": "Defines the number of pages that are rendered next to each other in a row.",
           "type": "integer",
           "default": 1
         },
         "first-page-column": {
-          "description": "Defines the column in which the first page will be displayed. This\n    setting is stored separately for every value of pages-per-row\n    according to the following pattern \\<1 page per row\\>:\\[\\<2 pages\n    per row\\>\\[: \\...\\]\\]. The last value in the list will be used for\n    all other number of pages per row if not set explicitly.",
+          "description": "Defines the column in which the first page will be displayed. This setting is stored separately for every value of pages-per-row according to the following pattern \\<1 page per row\\>:\\[\\<2 pages per row\\>\\[: \\...\\]\\]. The last value in the list will be used for all other number of pages per row if not set explicitly.",
           "type": "string",
-          "default": "1:2"
+          "default": "1:2",
+          "pattern": "\\d+(:\\d+)*"
         },
         "recolor": {
           "description": "En/Disables recoloring",
@@ -242,14 +281,16 @@
           "default": false
         },
         "recolor-darkcolor": {
-          "description": "Defines the color value that is used to represent dark colors in\n    recoloring mode",
+          "description": "Defines the color value that is used to represent dark colors in recoloring mode",
           "type": "string",
-          "default": "#FFFFFF"
+          "default": "#FFFFFF",
+          "format": "color"
         },
         "recolor-lightcolor": {
-          "description": "Defines the color value that is used to represent light colors in\n    recoloring mode",
+          "description": "Defines the color value that is used to represent light colors in recoloring mode",
           "type": "string",
-          "default": "#000000"
+          "default": "#000000",
+          "format": "color"
         },
         "recolor-reverse-video": {
           "description": "Defines if original image colors should be kept while recoloring.",
@@ -257,32 +298,34 @@
           "default": false
         },
         "render-loading": {
-          "description": "Defines if the \\\"Loading\\...\\\" text should be displayed if a page\n    is rendered.",
+          "description": "Defines if the \\\"Loading\\...\\\" text should be displayed if a page is rendered.",
           "type": "boolean",
           "default": true
         },
         "render-loading-bg": {
-          "description": "Defines the background color that is used for the \\\"Loading\\...\\\"\n    text.",
+          "description": "Defines the background color that is used for the \\\"Loading\\...\\\" text.",
           "type": "string",
-          "default": "#FFFFFF"
+          "default": "#FFFFFF",
+          "format": "color"
         },
         "render-loading-fg": {
-          "description": "Defines the foreground color that is used for the \\\"Loading\\...\\\"\n    text.",
+          "description": "Defines the foreground color that is used for the \\\"Loading\\...\\\" text.",
           "type": "string",
-          "default": "#000000"
+          "default": "#000000",
+          "format": "color"
         },
         "scroll-hstep": {
-          "description": "Defines the horizontal step size of scrolling by calling the\n    scroll command once",
+          "description": "Defines the horizontal step size of scrolling by calling the scroll command once",
           "type": "number",
           "default": -1.0
         },
         "scroll-step": {
-          "description": "Defines the step size of scrolling by calling the scroll command\n    once",
+          "description": "Defines the step size of scrolling by calling the scroll command once",
           "type": "number",
           "default": 40.0
         },
         "scroll-full-overlap": {
-          "description": "Defines the proportion of the current viewing area that should be\n    visible after scrolling a full page.",
+          "description": "Defines the proportion of the current viewing area that should be visible after scrolling a full page.",
           "type": "number",
           "default": 0.0
         },
@@ -297,17 +340,17 @@
           "default": true
         },
         "show-hidden": {
-          "description": "Defines if hidden files and directories should be displayed in\n    completion.",
+          "description": "Defines if hidden files and directories should be displayed in completion.",
           "type": "boolean",
           "default": false
         },
         "show-recent": {
-          "description": "Defines the number of recent files that should be displayed in\n    completion. If the value is negative, no upper bounds are applied.\n    If the value is 0, no recent files are shown.",
+          "description": "Defines the number of recent files that should be displayed in completion. If the value is negative, no upper bounds are applied. If the value is 0, no recent files are shown.",
           "type": "integer",
           "default": 10
         },
         "scroll-page-aware": {
-          "description": "Defines if scrolling by half or full pages stops at page\n    boundaries.",
+          "description": "Defines if scrolling by half or full pages stops at page boundaries.",
           "type": "boolean",
           "default": false
         },
@@ -317,7 +360,7 @@
           "default": true
         },
         "link-hadjust": {
-          "description": "En/Disables aligning to the left internal link targets, for\n    example from the index.",
+          "description": "En/Disables aligning to the left internal link targets, for example from the index.",
           "type": "boolean",
           "default": true
         },
@@ -332,7 +375,7 @@
           "default": false
         },
         "window-title-home-tilde": {
-          "description": "Display a short version of the file path, which replaces \\$HOME\n    with \\~, in the window title.",
+          "description": "Display a short version of the file path, which replaces \\$HOME with \\~, in the window title.",
           "type": "boolean",
           "default": false
         },
@@ -347,12 +390,12 @@
           "default": false
         },
         "statusbar-page-percent": {
-          "description": "Display (current page / total pages) as a percent in the\n    statusbar.",
+          "description": "Display (current page / total pages) as a percent in the statusbar.",
           "type": "boolean",
           "default": false
         },
         "statusbar-home-tilde": {
-          "description": "Display a short version of the file path, which replaces \\$HOME\n    with \\~, in the statusbar.",
+          "description": "Display a short version of the file path, which replaces \\$HOME with \\~, in the statusbar.",
           "type": "boolean",
           "default": false
         },
@@ -377,17 +420,21 @@
           "default": 10
         },
         "zoom-step": {
-          "description": "Defines the amount of percent that is zoomed in or out on each\n    command.",
+          "description": "Defines the amount of percent that is zoomed in or out on each command.",
           "type": "integer",
           "default": 10
         },
         "selection-clipboard": {
-          "description": "Defines the X clipboard into which mouse-selected data will be\n    written. When it is \\\"clipboard\\\", selected data will be written\n    to the CLIPBOARD clipboard, and can be pasted using the Ctrl+v key\n    combination. When it is \\\"primary\\\", selected data will be written\n    to the PRIMARY clipboard, and can be pasted using the middle mouse\n    button, or the Shift-Insert key combination.",
+          "description": "Defines the X clipboard into which mouse-selected data will be written. When it is \\\"clipboard\\\", selected data will be written to the CLIPBOARD clipboard, and can be pasted using the Ctrl+v key combination. When it is \\\"primary\\\", selected data will be written to the PRIMARY clipboard, and can be pasted using the middle mouse button, or the Shift-Insert key combination.",
           "type": "string",
-          "default": "primary"
+          "default": "primary",
+          "enum": [
+            "clipboard",
+            "primary"
+          ]
         },
         "selection-notification": {
-          "description": "Defines if a notification should be displayed after selecting\n    text.",
+          "description": "Defines if a notification should be displayed after selecting text.",
           "type": "boolean",
           "default": true
         },
@@ -403,35 +450,44 @@
         "index-fg": {
           "description": "Defines the foreground color of the index mode.",
           "type": "string",
-          "default": "#DDDDDD"
+          "default": "#DDDDDD",
+          "format": "color"
         },
         "index-bg": {
           "description": "Define the background color of the index mode.",
           "type": "string",
-          "default": "#232323"
+          "default": "#232323",
+          "format": "color"
         },
         "index-active-fg": {
-          "description": "Defines the foreground color of the selected element in index\n    mode.",
+          "description": "Defines the foreground color of the selected element in index mode.",
           "type": "string",
-          "default": "#232323"
+          "default": "#232323",
+          "format": "color"
         },
         "index-active-bg": {
           "description": "Define the background color of the selected element in index mode.",
           "type": "string",
-          "default": "#9FBC00"
+          "default": "#9FBC00",
+          "format": "color"
         },
         "sandbox": {
-          "description": "Defines the sandbox mode to use for the seccomp syscall filter.\n    Possible values are \\\"none\\\", \\\"normal\\\" and \\\"strict\\\". If\n    \\\"none\\\" is used, the sandbox will be disabled. The use of\n    \\\"normal\\\" will provide minimal protection and allow normal use of\n    zathura with support for all features. The \\\"strict\\\" mode is a\n    read only sandbox that is intended for viewing documents only.",
+          "description": "Defines the sandbox mode to use for the seccomp syscall filter. Possible values are \\\"none\\\", \\\"normal\\\" and \\\"strict\\\". If \\\"none\\\" is used, the sandbox will be disabled. The use of \\\"normal\\\" will provide minimal protection and allow normal use of zathura with support for all features. The \\\"strict\\\" mode is a read only sandbox that is intended for viewing documents only.",
           "type": "string",
-          "default": "normal"
+          "default": "normal",
+          "enum": [
+            "none",
+            "normal",
+            "strict"
+          ]
         },
         "window-icon-document": {
-          "description": "Defines whether the window document should be updated based on the\n    first page of a dcument.",
+          "description": "Defines whether the window document should be updated based on the first page of a dcument.",
           "type": "boolean",
           "default": false
         },
         "page-right-to-left": {
-          "description": "Defines whether pages in multi-column view should start from the\n    right side.",
+          "description": "Defines whether pages in multi-column view should start from the right side.",
           "type": "boolean",
           "default": false
         }
