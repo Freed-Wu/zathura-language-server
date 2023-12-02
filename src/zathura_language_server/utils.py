@@ -6,7 +6,6 @@ import os
 from typing import Any
 
 from tree_sitter.binding import Query
-from tree_sitter_languages import get_language
 
 from . import FILETYPE
 
@@ -14,7 +13,7 @@ SCHEMAS = {}
 QUERIES = {}
 
 
-def get_query(name: str, filetype: str = "bash") -> Query:
+def get_query(name: str, filetype: FILETYPE = "zathurarc") -> Query:
     r"""Get query.
 
     :param name:
@@ -34,7 +33,8 @@ def get_query(name: str, filetype: str = "bash") -> Query:
             )
         ) as f:
             text = f.read()
-        language = get_language(filetype)
+        from tree_sitter_zathurarc import language
+
         QUERIES[name] = language.query(text)
     return QUERIES[name]
 
