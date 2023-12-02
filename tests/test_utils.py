@@ -14,7 +14,7 @@ class Test:
         assert len(
             get_schema()
             .get("properties", {})
-            .get("recolor", {})
+            .get("set", {})
             .get("description", "")
             .splitlines()
         )
