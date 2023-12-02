@@ -3,3 +3,4 @@
 platformdirs
 pygls
 tree-sitter-lsp >= 0.0.5
+webcolors
