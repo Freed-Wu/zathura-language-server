@@ -1,14 +1,10 @@
 r"""Zathurarc
 =============
 """
-import os
 import re
-from gzip import decompress
 from typing import Any
 
-from markdown_it import MarkdownIt
-from platformdirs import site_data_dir
-from pypandoc import convert_text
+from tree_sitter_lsp.misc import get_md_tokens
 
 from .._metainfo import SOURCE, project
 
@@ -31,16 +27,7 @@ def init_schema() -> dict[str, Any]:
             "properties": {},
         }
     }
-    with open(
-        os.path.join(
-            os.path.join(site_data_dir("man"), "man5"), "zathurarc.5.gz"
-        ),
-        "rb",
-    ) as f:
-        text = decompress(f.read()).decode()
-    text = convert_text(text, "markdown", "man")
-    md = MarkdownIt("commonmark", {})
-    tokens = md.parse(text)
+    tokens = get_md_tokens("zathurarc")
     indices = []
     end_index = len(tokens)
     for i, token in enumerate(tokens):
