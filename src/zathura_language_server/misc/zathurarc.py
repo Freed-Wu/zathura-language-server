@@ -1,19 +1,20 @@
-r"""Api
-=======
+r"""Zathurarc
+=============
 """
 import os
 import re
 from gzip import decompress
+from typing import Any
 
 from markdown_it import MarkdownIt
 from platformdirs import site_data_dir
 from pypandoc import convert_text
 
 
-def init_document() -> dict[str, str]:
-    r"""Init document.
+def init_schema() -> dict[str, Any]:
+    r"""Init schema.
 
-    :rtype: dict[str, str]
+    :rtype: dict[str, Any]
     """
     with open(
         os.path.join(
@@ -74,4 +75,4 @@ def init_document() -> dict[str, str]:
                 ).replace("---", "\n")
         items[keyword] = items[keyword].strip()
 
-    return items
+    return {"zathurarc": items}

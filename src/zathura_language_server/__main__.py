@@ -6,6 +6,7 @@ from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from contextlib import suppress
 from datetime import datetime
 
+from . import FILETYPE
 from . import __name__ as NAME
 from . import __version__
 
@@ -31,13 +32,60 @@ def get_parser():
 
         shtab.add_argument_to(parser)
     parser.add_argument("--version", version=VERSION, action="version")
+    parser.add_argument(
+        "--generate-schema",
+        choices=FILETYPE.__args__,  # type: ignore
+        help="generate schema in an output format",
+    )
+    parser.add_argument(
+        "--indent",
+        type=int,
+        default=2,
+        help="generated json's indent",
+    )
+    parser.add_argument(
+        "--check",
+        nargs="*",
+        default={},
+        help="check file's errors and warnings",
+    )
+    parser.add_argument(
+        "--color",
+        choices=["auto", "always", "never"],
+        default="auto",
+        help="when to display color, default: %(default)s",
+    )
+    parser.add_argument(
+        "--convert",
+        nargs="*",
+        default={},
+        help="convert files to output format",
+    )
+    parser.add_argument(
+        "--output-format",
+        choices=["json", "yaml", "toml"],
+        default="json",
+        help="output format: %(default)s",
+    )
     return parser
 
 
 def main():
     r"""Parse arguments and provide shell completions."""
-    parser = get_parser()
-    parser.parse_args()
+    args = get_parser().parse_args()
+
+    if args.generate_schema or args.check or args.convert:
+        from tree_sitter_lsp.utils import pprint
+
+        if args.generate_schema:
+            from .misc import get_schema
+
+            pprint(
+                get_schema(args.generate_schema),
+                filetype=args.output_format,
+                indent=args.indent,
+            )
+        exit(0)
 
     from .server import ZathuraLanguageServer
 
