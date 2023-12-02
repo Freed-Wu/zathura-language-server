@@ -39,8 +39,14 @@
 
 A language server for zathura's zathurarc.
 
-- [x] document hover
-- [x] completion
+- [ ] [Diagnostic](https://microsoft.github.io/language-server-protocol/specifications/specification-current#diagnostic):
+  - [ ] option
+- [x] [Hover](https://microsoft.github.io/language-server-protocol/specifications/specification-current#textDocument_hover)
+  - [x] option
+  - [x] keyword
+- [x] [Completion](https://microsoft.github.io/language-server-protocol/specifications/specification-current#textDocument_completion)
+  - [x] option
+  - [x] keyword
 
 ![Document hover](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/1399c992-9dfc-4b7f-9640-a66f0dff5432)
 
@@ -49,16 +55,3 @@ A language server for zathura's zathurarc.
 See
 [![readthedocs](https://shields.io/readthedocs/zathura-language-server)](https://zathura-language-server.readthedocs.io)
 to know more.
-
-## Vim Plugin
-
-You can use
-[branch release](https://github.com/Freed-Wu/zathura-language-server/tree/release)
-to avoid downloading unnecessary files for vim plugin. Such as for
-[dein.vim](https://github.com/Shougo/dein.vim):
-
-```vim
-call dein#add('Freed-Wu/zathura-language-server', {
-      \ 'rev': 'release',
-      \ })
-```
