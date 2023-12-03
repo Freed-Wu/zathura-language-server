@@ -76,12 +76,21 @@ def main():
 
     if args.generate_schema or args.check or args.convert:
         from tree_sitter_lsp.utils import pprint
+        from tree_sitter_zathurarc import parser
+
+        from .schema import ZathurarcTrie
 
         if args.generate_schema:
             from .misc import get_schema
 
             pprint(
                 get_schema(args.generate_schema),
+                filetype=args.output_format,
+                indent=args.indent,
+            )
+        for file in args.convert:
+            pprint(
+                ZathurarcTrie.from_file(file, parser.parse).to_json(),
                 filetype=args.output_format,
                 indent=args.indent,
             )
