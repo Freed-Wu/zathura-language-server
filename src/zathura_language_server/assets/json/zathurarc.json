@@ -167,12 +167,12 @@
         },
         "adjust-open": {
           "description": "Defines which auto adjustment mode should be used if a document is loaded. Possible options are \\\"best-fit\\\" and \\\"width\\\".",
-          "type": "string",
-          "default": "best-fit",
           "enum": [
             "best-fit",
             "width"
-          ]
+          ],
+          "type": "string",
+          "default": "best-fit"
         },
         "advance-pages-per-row": {
           "description": "Defines if the number of pages per row should be honored when advancing a page.",
@@ -186,13 +186,13 @@
         },
         "database": {
           "description": "Defines the database backend to use for bookmarks and input history. Possible values are \\\"plain\\\", \\\"sqlite\\\" (if built with sqlite support) and \\\"null\\\". If \\\"null\\\" is used, bookmarks and input history will not be stored.",
-          "type": "string",
-          "default": "plain",
           "enum": [
             "plain",
             "sqlite",
             "null"
-          ]
+          ],
+          "type": "string",
+          "default": "plain"
         },
         "dbus-service": {
           "description": "En/Disables the D-Bus service. If the services is disabled, SyncTeX forward synchronization is not available.",
@@ -206,13 +206,13 @@
         },
         "filemonitor": {
           "description": "Defines the file monitor backend used to check for changes in files. Possible values are \\\"glib\\\", \\\"signal\\\" (if signal handling is supported), and \\\"noop\\\". The \\\"noop\\\" file monitor does not trigger reloads.",
-          "type": "string",
-          "default": "glib",
           "enum": [
             "glib",
             "signal",
             "noop"
-          ]
+          ],
+          "type": "string",
+          "default": "glib"
         },
         "incremental-search": {
           "description": "En/Disables incremental search (search while typing).",
@@ -473,13 +473,13 @@
         },
         "sandbox": {
           "description": "Defines the sandbox mode to use for the seccomp syscall filter. Possible values are \\\"none\\\", \\\"normal\\\" and \\\"strict\\\". If \\\"none\\\" is used, the sandbox will be disabled. The use of \\\"normal\\\" will provide minimal protection and allow normal use of zathura with support for all features. The \\\"strict\\\" mode is a read only sandbox that is intended for viewing documents only.",
-          "type": "string",
-          "default": "normal",
           "enum": [
             "none",
             "normal",
             "strict"
-          ]
+          ],
+          "type": "string",
+          "default": "normal"
         },
         "window-icon-document": {
           "description": "Defines whether the window document should be updated based on the first page of a dcument.",
