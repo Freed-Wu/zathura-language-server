@@ -84,14 +84,31 @@ def init_schema() -> dict[str, Any]:
                     .get("description")
                     is None
                 ):
+                    description = " ".join(
+                        line.strip()
+                        for line in token.content.lstrip(": ").splitlines()
+                    )
                     schemas[filetype]["properties"]["set"]["properties"][
                         keyword
-                    ] = {
-                        "description": " ".join(
-                            line.strip()
-                            for line in token.content.lstrip(": ").splitlines()
-                        )
-                    }
+                    ] = {"description": description}
+                    if (
+                        description.find("Possible values are ")
+                        == description.find("Possible options are ")
+                        == -1
+                    ):
+                        continue
+                    schemas[filetype]["properties"]["set"]["properties"][
+                        keyword
+                    ]["enum"] = [
+                        value.split(" ")[0].replace('\\"', "")
+                        for value in description.rpartition(
+                            "Possible values are "
+                        )[2]
+                        .rpartition("Possible options are ")[2]
+                        .partition(".")[0]
+                        .replace(" and ", ", ")
+                        .split(", ")
+                    ]
                     continue
                 for line in token.content.splitlines():
                     if line.find("Value type: ") != -1:
@@ -127,31 +144,19 @@ def init_schema() -> dict[str, Any]:
                             schemas[filetype]["properties"]["set"][
                                 "properties"
                             ][keyword]["format"] = "color"
-    schemas[filetype]["properties"]["set"]["properties"]["guioptions"][
-        "pattern"
-    ] = r"[cshv]*"
-    schemas[filetype]["properties"]["set"]["properties"]["database"][
-        "enum"
-    ] = ["plain", "sqlite", "null"]
-    schemas[filetype]["properties"]["set"]["properties"]["adjust-open"][
-        "enum"
-    ] = ["best-fit", "width"]
-    schemas[filetype]["properties"]["set"]["properties"]["filemonitor"][
-        "enum"
-    ] = ["glib", "signal", "noop"]
+
     schemas[filetype]["properties"]["set"]["properties"][
         "highlight-transparency"
     ] |= {"minimum": 0, "maximum": 1}
+
+    schemas[filetype]["properties"]["set"]["properties"]["guioptions"][
+        "pattern"
+    ] = r"[cshv]*"
     schemas[filetype]["properties"]["set"]["properties"]["first-page-column"][
         "pattern"
     ] = r"\d+(:\d+)*"
     schemas[filetype]["properties"]["set"]["properties"][
         "selection-clipboard"
     ]["enum"] = ["clipboard", "primary"]
-    schemas[filetype]["properties"]["set"]["properties"]["sandbox"]["enum"] = [
-        "none",
-        "normal",
-        "strict",
-    ]
 
     return schemas
