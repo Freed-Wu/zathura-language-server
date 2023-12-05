@@ -40,6 +40,24 @@ class ZathurarcTrie(Trie):
                 UNI.node2range(node), parent, convert(UNI.node2text(node))
             )
         if node.type == "map_directive":
+            # Use:
+            #       "map": {
+            #         "normal": [
+            #           {
+            #             "<Esc>": { "zoom": "in" }
+            #           },
+            #           {
+            #             "<Esc>": { "recolor": null }
+            #           }
+            #         ]
+            #       },
+            #       not:
+            #       "map": {
+            #         "normal": {
+            #             "<Esc>": { "recolor": null }
+            #           }
+            #       },
+            # to avoid override
             trie = cls(UNI.node2range(node), parent, {})
             value: dict[str, Trie] = trie.value  # type: ignore
             key: Node = node.children[1]
@@ -55,6 +73,7 @@ class ZathurarcTrie(Trie):
                 if argument
                 else UNI.node2range(shortcut),
                 subtrie,
+                # FIXME: wrong format of json schema
                 UNI.node2text(argument) if argument else None,
             )
             return trie
@@ -74,6 +93,7 @@ class ZathurarcTrie(Trie):
             for directive in directives:
                 _type = directive.split("_")[0]
                 trie.value[_type] = cls(  # type: ignore
+                    # TODO: Use the position of first occurrence as range
                     Range(Position(0, 0), Position(1, 0)),
                     trie,
                     {} if directive != "include_directive" else [],

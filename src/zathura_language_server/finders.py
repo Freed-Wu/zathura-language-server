@@ -4,8 +4,11 @@ r"""Finders
 from dataclasses import dataclass
 
 from lsprotocol.types import DiagnosticSeverity
-from tree_sitter_lsp.finders import ErrorFinder
+from tree_sitter_lsp.finders import ErrorFinder, SchemaFinder
 from tree_sitter_zathurarc import language
+
+from .schema import ZathurarcTrie
+from .utils import get_schema
 
 
 @dataclass(init=False)
@@ -30,6 +33,20 @@ class ErrorZathurarcFinder(ErrorFinder):
         super().__init__(language, message, severity)
 
 
+@dataclass(init=False)
+class ZathurarcFinder(SchemaFinder):
+    r"""Zathurarcfinder."""
+
+    def __init__(self) -> None:
+        r"""Init.
+
+        :rtype: None
+        """
+        self.validator = self.schema2validator(get_schema())
+        self.cls = ZathurarcTrie
+
+
 DIAGNOSTICS_FINDER_CLASSES = [
-    ErrorFinder,
+    ErrorZathurarcFinder,
+    ZathurarcFinder,
 ]

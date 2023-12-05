@@ -75,9 +75,11 @@ def main():
     args = get_parser().parse_args()
 
     if args.generate_schema or args.check or args.convert:
+        from tree_sitter_lsp.diagnose import check
         from tree_sitter_lsp.utils import pprint
         from tree_sitter_zathurarc import parser
 
+        from .finders import DIAGNOSTICS_FINDER_CLASSES
         from .schema import ZathurarcTrie
 
         if args.generate_schema:
@@ -94,7 +96,15 @@ def main():
                 filetype=args.output_format,
                 indent=args.indent,
             )
-        exit(0)
+        exit(
+            check(
+                args.check,
+                parser.parse,
+                DIAGNOSTICS_FINDER_CLASSES,
+                None,
+                args.color,
+            )
+        )
 
     from .server import ZathuraLanguageServer
 
