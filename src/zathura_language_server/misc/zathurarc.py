@@ -24,6 +24,7 @@ def init_schema() -> dict[str, Any]:
                 f"`{project} --generate-schema={filetype}`."
             ),
             "type": "object",
+            "additionalProperties": False,
             "properties": {},
         }
     }
@@ -52,8 +53,40 @@ def init_schema() -> dict[str, Any]:
                     "description"
                 ] += "\n" + re.sub(r"\n\s*", " ", token.content)
     schemas[filetype]["properties"]["include"]["type"] = "array"
+    schemas[filetype]["properties"]["include"]["uniqueItems"] = True
+    for key in {"map", "unmap"}:
+        schemas[filetype]["properties"][key]["type"] = "object"
+        schemas[filetype]["properties"][key]["additionalProperties"] = False
+        schemas[filetype]["properties"][key]["properties"] = {}
+    # Use list not dict to keep order
+    for mode in ["normal", "fullscreen", "presentation", "index"]:
+        schemas[filetype]["properties"]["unmap"]["properties"][mode] = {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "uniqueItems": True,
+            },
+        }
+        schemas[filetype]["properties"]["map"]["properties"][mode] = {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "patternProperties": {
+                    ".*": {
+                        "type": "object",
+                        "additionalProperties": False,
+                        "properties": {
+                            "shortcut": {"type": "string"},
+                            "argument": {"type": "string"},
+                        },
+                    }
+                },
+                "uniqueItems": True,
+            },
+        }
 
     schemas[filetype]["properties"]["set"]["properties"] = {}
+    schemas[filetype]["properties"]["set"]["additionalProperties"] = False
     indices = []
     for i, token in enumerate(tokens[end_index:], end_index):
         if token.content == "SEE ALSO":
