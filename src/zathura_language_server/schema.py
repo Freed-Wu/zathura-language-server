@@ -40,42 +40,19 @@ class ZathurarcTrie(Trie):
                 UNI.node2range(node), parent, convert(UNI.node2text(node))
             )
         if node.type == "map_directive":
-            # Use:
-            #       "map": {
-            #         "normal": [
-            #           {
-            #             "<Esc>": { "zoom": "in" }
-            #           },
-            #           {
-            #             "<Esc>": { "recolor": null }
-            #           }
-            #         ]
-            #       },
-            #       not:
-            #       "map": {
-            #         "normal": {
-            #             "<Esc>": { "recolor": null }
-            #           }
-            #       },
-            # to avoid override
             trie = cls(UNI.node2range(node), parent, {})
             value: dict[str, Trie] = trie.value  # type: ignore
             key: Node = node.children[1]
             if key.type == "mode":
                 key: Node = key.next_sibling  # type: ignore
+            subtrie = value[UNI.node2text(key)] = cls(UNI.node2range(key), trie, {})  # type: ignore
+            subvalue: dict[str, Trie] = subtrie.value  # type: ignore
+
             shortcut: Node = key.next_sibling  # type: ignore
             argument = shortcut.next_sibling
-            value[UNI.node2text(key)] = cls(UNI.node2range(shortcut), trie, {})  # type: ignore
-            subtrie = value[UNI.node2text(key)]  # type: ignore
-            subvalue: dict[str, Trie] = subtrie.value  # type: ignore
-            subvalue[UNI.node2text(shortcut)] = cls(
-                UNI.node2range(argument)
-                if argument
-                else UNI.node2range(shortcut),
-                subtrie,
-                # FIXME: wrong format of json schema
-                UNI.node2text(argument) if argument else None,
-            )
+            subvalue["shortcut"] = cls(UNI.node2range(shortcut), trie, UNI.node2text(shortcut))  # type: ignore
+            if argument := shortcut.next_sibling:
+                subvalue["argument"] = cls(UNI.node2range(argument), trie, UNI.node2text(argument))  # type: ignore
             return trie
         if node.type == "unmap_directive":
             key = node.children[1]
