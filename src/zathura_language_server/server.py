@@ -1,7 +1,6 @@
 r"""Server
 ==========
 """
-import re
 from typing import Any
 
 from lsprotocol.types import (
@@ -17,12 +16,12 @@ from lsprotocol.types import (
     Hover,
     MarkupContent,
     MarkupKind,
-    Position,
-    Range,
     TextDocumentPositionParams,
 )
 from pygls.server import LanguageServer
+from tree_sitter_lsp.complete import get_completion_list_by_uri
 from tree_sitter_lsp.diagnose import get_diagnostics
+from tree_sitter_lsp.finders import PositionFinder
 from tree_sitter_zathurarc import parser
 
 from .finders import DIAGNOSTICS_FINDER_CLASSES
@@ -69,23 +68,27 @@ class ZathuraLanguageServer(LanguageServer):
             :type params: TextDocumentPositionParams
             :rtype: Hover | None
             """
-            word = self._cursor_word(
-                params.text_document.uri, params.position, True
+            document = self.workspace.get_document(params.text_document.uri)
+            uni = PositionFinder(params.position, right_equal=True).find(
+                document.uri, self.trees[document.uri]
             )
-            if not word:
+            if uni is None:
                 return None
-            result = get_schema()["properties"].get(word[0])
-            if not result:
+            text = uni.get_text()
+            result = None
+            if uni.node.range.start_point[1] == 0:
+                result = get_schema()["properties"].get(text)
+            elif uni.node.type == "option":
                 result = get_schema()["properties"]["set"]["properties"].get(
-                    word[0]
+                    text
                 )
-                if not result:
-                    return None
+            if result is None:
+                return None
             return Hover(
                 contents=MarkupContent(
                     kind=MarkupKind.Markdown, value=result["description"]
                 ),
-                range=word[1],
+                range=uni.get_range(),
             )
 
         @self.feature(TEXT_DOCUMENT_COMPLETION)
@@ -96,71 +99,47 @@ class ZathuraLanguageServer(LanguageServer):
             :type params: CompletionParams
             :rtype: CompletionList
             """
-            word = self._cursor_word(
-                params.text_document.uri, params.position, False
+            document = self.workspace.get_document(params.text_document.uri)
+            uni = PositionFinder(params.position, right_equal=True).find(
+                document.uri, self.trees[document.uri]
             )
-            token = "" if word is None else word[0]
-            items = [
-                CompletionItem(
-                    label=x,
-                    kind=(
-                        CompletionItemKind.Constant
-                        if get_schema().get(x, "").startswith(":")
-                        else CompletionItemKind.Function
-                    ),
-                    documentation=MarkupContent(
-                        kind=MarkupKind.Markdown,
-                        value=get_schema().get(x, {}).get("description", ""),
-                    ),
-                    insert_text=x,
+            if uni is None:
+                return CompletionList(False, [])
+            text = uni.get_text()
+            if uni.node.range.start_point[1] == 0:
+                return CompletionList(
+                    False,
+                    [
+                        CompletionItem(
+                            x,
+                            kind=CompletionItemKind.Variable,
+                            documentation=property["description"],
+                            insert_text=x,
+                        )
+                        for x, property in get_schema()["properties"].items()
+                        if x.startswith(text)
+                    ],
                 )
-                for x in get_schema()
-                if x.startswith(token)
-            ]
-            return CompletionList(is_incomplete=False, items=items)
-
-    def _cursor_line(self, uri: str, position: Position) -> str:
-        r"""Cursor line.
-
-        :param uri:
-        :type uri: str
-        :param position:
-        :type position: Position
-        :rtype: str
-        """
-        doc = self.workspace.get_document(uri)
-        content = doc.source
-        line = content.split("\n")[position.line]
-        return str(line)
-
-    def _cursor_word(
-        self,
-        uri: str,
-        position: Position,
-        include_all: bool = True,
-    ) -> tuple[str, Range] | None:
-        r"""Cursor word.
-
-        :param uri:
-        :type uri: str
-        :param position:
-        :type position: Position
-        :param include_all:
-        :type include_all: bool
-        :rtype: tuple[str, Range] | None
-        """
-        pat = r"[a-z_-]+"
-        line = self._cursor_line(uri, position)
-        cursor = position.character
-        for m in re.finditer(pat, line):
-            end = m.end() if include_all else cursor
-            if m.start() <= cursor <= m.end():
-                word = (
-                    line[m.start() : end],
-                    Range(
-                        Position(position.line, m.start()),
-                        Position(position.line, end),
-                    ),
+            elif uni.node.type == "option":
+                return CompletionList(
+                    False,
+                    [
+                        CompletionItem(
+                            x,
+                            kind=CompletionItemKind.Variable,
+                            documentation=property["description"],
+                            insert_text=x,
+                        )
+                        for x, property in get_schema()["properties"]["set"][
+                            "properties"
+                        ].items()
+                        if x.startswith(text)
+                    ],
                 )
-                return word
-        return None
+            elif uni.node.type == "path":
+                return get_completion_list_by_uri(
+                    text,
+                    document.uri,
+                    {"zathurarc*": "zathurarc", "**/zathurarc*": "zathurarc"},
+                )
+            return CompletionList(False, [])

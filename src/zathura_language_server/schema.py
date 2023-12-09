@@ -8,6 +8,13 @@ from tree_sitter import Node
 from tree_sitter_lsp import UNI
 from tree_sitter_lsp.schema import Trie
 
+DIRECTIVES = {
+    "set_directive",
+    "map_directive",
+    "unmap_directive",
+    "include_directive",
+}
+
 
 @dataclass
 class ZathurarcTrie(Trie):
@@ -36,9 +43,10 @@ class ZathurarcTrie(Trie):
                 convert = bool
             else:
                 convert = lambda x: x.strip("'\"")
-            return cls(
-                UNI.node2range(node), parent, convert(UNI.node2text(node))
-            )
+            text = UNI.node2text(node)
+            if text != "":
+                text = convert(text)
+            return cls(UNI.node2range(node), parent, text)
         if node.type == "map_directive":
             trie = cls(UNI.node2range(node), parent, {})
             value: dict[str, Trie] = trie.value  # type: ignore
@@ -61,16 +69,10 @@ class ZathurarcTrie(Trie):
             return cls(UNI.node2range(key), parent, UNI.node2text(key))
         if node.type == "file":
             trie = cls(Range(Position(0, 0), Position(1, 0)), parent, {})
-            directives = {
-                "set_directive",
-                "map_directive",
-                "unmap_directive",
-                "include_directive",
-            }
-            for directive in directives:
+            for directive in DIRECTIVES:
                 _type = directive.split("_")[0]
             for child in node.children:
-                if child.type not in directives:
+                if child.type not in DIRECTIVES:
                     continue
                 _type = child.type.split("_")[0]
                 value: dict[str, Trie] = trie.value  # type: ignore

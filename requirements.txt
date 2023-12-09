@@ -4,5 +4,5 @@ platformdirs
 pygls
 # Fix wrong range
 tree-sitter-lsp >= 0.0.6
-tree-sitter-zathurarc >= 0.0.2
+tree-sitter-zathurarc >= 0.0.3
 webcolors
