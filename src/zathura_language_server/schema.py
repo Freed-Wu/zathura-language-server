@@ -69,15 +69,17 @@ class ZathurarcTrie(Trie):
             }
             for directive in directives:
                 _type = directive.split("_")[0]
-                trie.value[_type] = cls(  # type: ignore
-                    # TODO: Use the position of first occurrence as range
-                    Range(Position(0, 0), Position(1, 0)),
-                    trie,
-                    {} if directive != "include_directive" else [],
-                )
             for child in node.children:
                 if child.type not in directives:
                     continue
+                _type = child.type.split("_")[0]
+                value: dict[str, Trie] = trie.value  # type: ignore
+                if _type not in value:
+                    trie.value[_type] = cls(  # type: ignore
+                        UNI.node2range(child),
+                        trie,
+                        {} if _type != "include" else [],
+                    )
                 subtrie: Trie = trie.value[child.type.split("_")[0]]  # type: ignore
                 value: dict[str, Trie] | list[Trie] = subtrie.value  # type: ignore
                 if child.type == "set_directive":
