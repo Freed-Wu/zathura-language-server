@@ -40,18 +40,30 @@ def init_schema() -> dict[str, Any]:
     for i, index in enumerate(indices):
         keyword, _, description = tokens[index].content.partition(" - ")
         schemas[filetype]["properties"][keyword] = {
-            "description": description,
             "type": "object",
         }
         if len(indices) - 1 == i:
             index2 = end_index
         else:
             index2 = indices[i + 1]
+        data = []
         for token in tokens[index + 1 : index2]:
-            if token.content != "" and not token.content.startswith("<!--"):
-                schemas[filetype]["properties"][keyword][
-                    "description"
-                ] += "\n" + re.sub(r"\n\s*", " ", token.content)
+            if len(data) == 2:
+                break
+            if token.content == "" or token.content.startswith("<!--"):
+                continue
+            data += [token.content]
+        # TODO: mode, shortcut, argument
+        # if keyword == "map":
+        #     for k, token in enumerate(tokens[index + 1 : index2]):
+        #         pass
+        schemas[filetype]["properties"][keyword][
+            "description"
+        ] = f"""# {description}
+{data[0]}
+```zathurarc
+{data[1]}
+```"""
     schemas[filetype]["properties"]["include"]["type"] = "array"
     schemas[filetype]["properties"]["include"]["uniqueItems"] = True
     for key in {"map", "unmap"}:
