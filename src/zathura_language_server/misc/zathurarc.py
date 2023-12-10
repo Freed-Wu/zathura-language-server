@@ -1,7 +1,6 @@
 r"""Zathurarc
 =============
 """
-import re
 from typing import Any
 
 from tree_sitter_lsp.misc import get_md_tokens
@@ -31,6 +30,9 @@ def init_schema() -> dict[str, Any]:
     tokens = get_md_tokens("zathurarc")
     indices = []
     end_index = len(tokens)
+    keys = []
+    shortcuts = []
+    arguments = []
     for i, token in enumerate(tokens):
         if token.content == "OPTIONS":
             end_index = i
@@ -53,10 +55,31 @@ def init_schema() -> dict[str, Any]:
             if token.content == "" or token.content.startswith("<!--"):
                 continue
             data += [token.content]
-        # TODO: mode, shortcut, argument
-        # if keyword == "map":
-        #     for k, token in enumerate(tokens[index + 1 : index2]):
-        #         pass
+        if keyword == "map":
+            start = False
+            for k, token in enumerate(tokens[index + 1 : index2], index + 1):
+                if token.content.replace("*", "") in {
+                    "Special keys",
+                    "Mouse buttons",
+                }:
+                    keys += [
+                        "<" + line.lstrip("> ").partition(" ")[0] + ">"
+                        for line in tokens[k + 5].content.splitlines()
+                    ][2:]
+                if token.content.replace("*", "") == "Shortcut functions":
+                    shortcuts = [
+                        line.strip("- :").replace("*", " ").strip(" ")
+                        for line in tokens[k + 5].content.splitlines()
+                        if line.startswith("-   ")
+                    ]
+                if token.content.replace("*", "") == "Pass arguments":
+                    start = True
+                if (
+                    start
+                    and token.content.islower()
+                    and token.type == "inline"
+                ):
+                    arguments += [token.content]
         schemas[filetype]["properties"][keyword][
             "description"
         ] = f"""# {description}
@@ -71,27 +94,30 @@ def init_schema() -> dict[str, Any]:
         schemas[filetype]["properties"][key]["additionalProperties"] = False
         schemas[filetype]["properties"][key]["properties"] = {}
     # Use list not dict to keep order
+    anyOf = [
+        {
+            "type": "string",
+            "enum": keys,
+        },
+        {
+            "type": "string",
+            "pattern": "<[ACS]-.*>|.|[a-zA-Z]+",
+        },
+    ]
     for mode in ["normal", "fullscreen", "presentation", "index"]:
         schemas[filetype]["properties"]["unmap"]["properties"][mode] = {
             "type": "array",
-            "items": {
-                "type": "string",
-                "uniqueItems": True,
-            },
+            "items": {"uniqueItems": True, "anyOf": anyOf},
         }
         schemas[filetype]["properties"]["map"]["properties"][mode] = {
             "type": "array",
             "items": {
                 "type": "object",
-                "patternProperties": {
-                    ".*": {
-                        "type": "object",
-                        "additionalProperties": False,
-                        "properties": {
-                            "shortcut": {"type": "string"},
-                            "argument": {"type": "string"},
-                        },
-                    }
+                "additionalProperties": False,
+                "properties": {
+                    "key": {"anyOf": anyOf},
+                    "shortcut": {"type": "string", "enum": shortcuts},
+                    "argument": {"type": "string", "enum": arguments + [None]},
                 },
                 "uniqueItems": True,
             },

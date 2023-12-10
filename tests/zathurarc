@@ -8,4 +8,4 @@ set fake-option 'JetBrainsMono Nerd Font regular 20'
 set font true
 set notification-error-bg       "#fbf1c7" # bg
 unmap <F1>
-unmap [normal] <Esc>
+unmap [normal] a
