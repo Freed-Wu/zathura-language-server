@@ -56,11 +56,19 @@ A language server for zathura's zathurarc.
   - [x] argument
   - [x] included path
 
-![Diagnostic](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/45b75d73-d8ec-42b6-881e-8255e3a4f6b1)
+## Diagnostic
 
-![Document hover](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/1399c992-9dfc-4b7f-9640-a66f0dff5432)
+![diagnostic](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/f30764f0-afae-4f1b-a966-fc9eaabdafa7)
 
-![Completion](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/5dfc602d-3089-4c85-8b8c-5e7ca2738c66)
+## Document hover
+
+![document hover](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/1399c992-9dfc-4b7f-9640-a66f0dff5432)
+
+## Completion
+
+![option](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/5dfc602d-3089-4c85-8b8c-5e7ca2738c66)
+
+![function](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/45b75d73-d8ec-42b6-881e-8255e3a4f6b1)
 
 See
 [![readthedocs](https://shields.io/readthedocs/zathura-language-server)](https://zathura-language-server.readthedocs.io)
