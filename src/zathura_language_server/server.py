@@ -88,10 +88,8 @@ class ZathuraLanguageServer(LanguageServer):
             if result is None:
                 return None
             return Hover(
-                contents=MarkupContent(
-                    kind=MarkupKind.Markdown, value=result["description"]
-                ),
-                range=uni.get_range(),
+                MarkupContent(MarkupKind.Markdown, result["description"]),
+                uni.get_range(),
             )
 
         @self.feature(TEXT_DOCUMENT_COMPLETION)
@@ -116,7 +114,9 @@ class ZathuraLanguageServer(LanguageServer):
                         CompletionItem(
                             x,
                             kind=CompletionItemKind.Variable,
-                            documentation=property["description"],
+                            documentation=MarkupContent(
+                                MarkupKind.Markdown, property["description"]
+                            ),
                             insert_text=x,
                         )
                         for x, property in get_schema()["properties"].items()
@@ -130,7 +130,9 @@ class ZathuraLanguageServer(LanguageServer):
                         CompletionItem(
                             x,
                             kind=CompletionItemKind.Variable,
-                            documentation=property["description"],
+                            documentation=MarkupContent(
+                                MarkupKind.Markdown, property["description"]
+                            ),
                             insert_text=x,
                         )
                         for x, property in get_schema()["properties"]["set"][
