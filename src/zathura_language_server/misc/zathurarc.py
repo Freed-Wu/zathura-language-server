@@ -31,7 +31,7 @@ def init_schema() -> dict[str, Any]:
     indices = []
     end_index = len(tokens)
     keys = []
-    shortcuts = []
+    functions = []
     arguments = []
     for i, token in enumerate(tokens):
         if token.content == "OPTIONS":
@@ -67,7 +67,7 @@ def init_schema() -> dict[str, Any]:
                         for line in tokens[k + 5].content.splitlines()
                     ][2:]
                 if token.content.replace("*", "") == "Shortcut functions":
-                    shortcuts = [
+                    functions = [
                         line.strip("- :").replace("*", " ").strip(" ")
                         for line in tokens[k + 5].content.splitlines()
                         if line.startswith("-   ")
@@ -116,7 +116,7 @@ def init_schema() -> dict[str, Any]:
                 "additionalProperties": False,
                 "properties": {
                     "key": {"anyOf": anyOf},
-                    "shortcut": {"type": "string", "enum": shortcuts},
+                    "function": {"type": "string", "enum": functions},
                     "argument": {"type": "string", "enum": arguments + [None]},
                 },
                 "uniqueItems": True,

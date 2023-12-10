@@ -555,7 +555,7 @@
                   }
                 ]
               },
-              "shortcut": {
+              "function": {
                 "type": "string",
                 "enum": [
                   "abort",
@@ -679,7 +679,7 @@
                   }
                 ]
               },
-              "shortcut": {
+              "function": {
                 "type": "string",
                 "enum": [
                   "abort",
@@ -803,7 +803,7 @@
                   }
                 ]
               },
-              "shortcut": {
+              "function": {
                 "type": "string",
                 "enum": [
                   "abort",
@@ -927,7 +927,7 @@
                   }
                 ]
               },
-              "shortcut": {
+              "function": {
                 "type": "string",
                 "enum": [
                   "abort",

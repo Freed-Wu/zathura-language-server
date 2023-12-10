@@ -39,14 +39,24 @@
 
 A language server for zathura's zathurarc.
 
-- [ ] [Diagnostic](https://microsoft.github.io/language-server-protocol/specifications/specification-current#diagnostic):
-  - [ ] option
+- [x] [Diagnostic](https://microsoft.github.io/language-server-protocol/specifications/specification-current#diagnostic):
+  - [x] option value
+  - [x] function
+  - [x] argument
+  - [x] included paths must be unique
+  - [x] unmapped keys must be unique
 - [x] [Hover](https://microsoft.github.io/language-server-protocol/specifications/specification-current#textDocument_hover)
   - [x] option
-  - [x] keyword
+  - [x] command
 - [x] [Completion](https://microsoft.github.io/language-server-protocol/specifications/specification-current#textDocument_completion)
   - [x] option
-  - [x] keyword
+  - [x] command
+  - [x] mode
+  - [x] function
+  - [x] argument
+  - [x] included path
+
+![Diagnostic](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/45b75d73-d8ec-42b6-881e-8255e3a4f6b1)
 
 ![Document hover](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/1399c992-9dfc-4b7f-9640-a66f0dff5432)
 
