@@ -19,7 +19,10 @@ from lsprotocol.types import (
     TextDocumentPositionParams,
 )
 from pygls.server import LanguageServer
-from tree_sitter_lsp.complete import get_completion_list_by_uri
+from tree_sitter_lsp.complete import (
+    get_completion_list_by_enum,
+    get_completion_list_by_uri,
+)
 from tree_sitter_lsp.diagnose import get_diagnostics
 from tree_sitter_lsp.finders import PositionFinder
 from tree_sitter_zathurarc import parser
@@ -135,6 +138,19 @@ class ZathuraLanguageServer(LanguageServer):
                         ].items()
                         if x.startswith(text)
                     ],
+                )
+            elif uni.node.type == "mode_name":
+                return get_completion_list_by_enum(
+                    text,
+                    {"enum": get_schema()["properties"]["map"]["properties"]},
+                )
+            # FIXME: find key node will get None
+            elif uni.node.type in {"key", "function", "argument"}:
+                return get_completion_list_by_enum(
+                    text,
+                    get_schema()["properties"]["map"]["properties"]["normal"][
+                        "items"
+                    ]["properties"][uni.node.type],
                 )
             elif uni.node.type == "path":
                 return get_completion_list_by_uri(

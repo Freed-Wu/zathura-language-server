@@ -52,13 +52,13 @@ class ZathurarcTrie(Trie):
             key: Node = node.children[1]
             if key.type == "mode":
                 key: Node = key.next_sibling  # type: ignore
-            shortcut: Node = key.next_sibling  # type: ignore
-            argument = shortcut.next_sibling
+            function: Node = key.next_sibling  # type: ignore
+            argument = function.next_sibling
 
             value: dict[str, Trie] = trie.value  # type: ignore
             value["key"] = cls(UNI.node2range(key), trie, UNI.node2text(key))  # type: ignore
-            value["shortcut"] = cls(UNI.node2range(shortcut), trie, UNI.node2text(shortcut))  # type: ignore
-            if argument := shortcut.next_sibling:
+            value["function"] = cls(UNI.node2range(function), trie, UNI.node2text(function))  # type: ignore
+            if argument := function.next_sibling:
                 value["argument"] = cls(UNI.node2range(argument), trie, UNI.node2text(argument))  # type: ignore
             return trie
         if node.type == "unmap_directive":
