@@ -40,7 +40,7 @@ class ZathurarcTrie(Trie):
             elif _type == "float":
                 convert = float
             elif _type == "bool":
-                convert = bool
+                convert = lambda x: x == "true"
             else:
                 convert = lambda x: x.strip("'\"")
             text = UNI.node2text(node)
