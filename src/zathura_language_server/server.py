@@ -141,6 +141,28 @@ class ZathuraLanguageServer(LanguageServer):
                         if x.startswith(text)
                     ],
                 )
+            elif uni.node.type == "string":
+                node = uni.node.prev_sibling
+                if node is None:
+                    return CompletionList(False, [])
+                property = get_schema()["properties"]["set"]["properties"].get(
+                    uni.node2text(node), {}
+                )
+                enum = property.get("enum", {})
+                if property.get("type", "") == "boolean":
+                    enum = {"true", "false"}
+                return CompletionList(
+                    False,
+                    [
+                        CompletionItem(
+                            x,
+                            kind=CompletionItemKind.Constant,
+                            insert_text=x,
+                        )
+                        for x in enum
+                        if x.startswith(text)
+                    ],
+                )
             elif uni.node.type == "mode_name":
                 return get_completion_list_by_enum(
                     text,
