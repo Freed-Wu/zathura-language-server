@@ -113,7 +113,7 @@ class ZathuraLanguageServer(LanguageServer):
                     [
                         CompletionItem(
                             x,
-                            kind=CompletionItemKind.Variable,
+                            kind=CompletionItemKind.Keyword,
                             documentation=MarkupContent(
                                 MarkupKind.Markdown, property["description"]
                             ),
