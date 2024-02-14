@@ -2,7 +2,7 @@
 
 platformdirs
 pygls
-# get_completion_list_by_enum()
-tree-sitter-lsp >= 0.0.9
+# UNI.get_uri()
+tree-sitter-lsp >= 0.0.11
 tree-sitter-zathurarc >= 0.0.3
 webcolors
