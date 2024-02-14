@@ -1,6 +1,7 @@
 r"""Schema
 ==========
 """
+
 from dataclasses import dataclass
 
 from lsprotocol.types import Position, Range
@@ -40,9 +41,14 @@ class ZathurarcTrie(Trie):
             elif _type == "float":
                 convert = float
             elif _type == "bool":
-                convert = lambda x: x == "true"
+
+                def convert(x):
+                    return x == "true"
             else:
-                convert = lambda x: x.strip("'\"")
+
+                def convert(x):
+                    return x.strip("'\"")
+
             text = UNI.node2text(node)
             if text != "":
                 text = convert(text)
@@ -57,9 +63,13 @@ class ZathurarcTrie(Trie):
 
             value: dict[str, Trie] = trie.value  # type: ignore
             value["key"] = cls(UNI.node2range(key), trie, UNI.node2text(key))  # type: ignore
-            value["function"] = cls(UNI.node2range(function), trie, UNI.node2text(function))  # type: ignore
+            value["function"] = cls(
+                UNI.node2range(function), trie, UNI.node2text(function)
+            )  # type: ignore
             if argument := function.next_sibling:
-                value["argument"] = cls(UNI.node2range(argument), trie, UNI.node2text(argument))  # type: ignore
+                value["argument"] = cls(
+                    UNI.node2range(argument), trie, UNI.node2text(argument)
+                )  # type: ignore
             return trie
         if node.type == "unmap_directive":
             key = node.children[1]
@@ -115,6 +125,8 @@ class ZathurarcTrie(Trie):
                             cls.from_node(child, value[mode])
                         ]
                     else:
-                        value[mode].value += [cls.from_node(child, value[mode])]  # type: ignore
+                        value[mode].value += [
+                            cls.from_node(child, value[mode])
+                        ]  # type: ignore
             return trie
         raise NotImplementedError(node.type)
