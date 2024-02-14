@@ -39,6 +39,7 @@
 
 A language server for zathura's zathurarc.
 
+- [x] [Document Link](https://microsoft.github.io/language-server-protocol/specifications/specification-current#textDocument_documentLink)
 - [x] [Diagnostic](https://microsoft.github.io/language-server-protocol/specifications/specification-current#diagnostic):
   - [x] option value
   - [x] function
