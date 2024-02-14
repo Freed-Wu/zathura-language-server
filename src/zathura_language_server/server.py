@@ -8,12 +8,15 @@ from lsprotocol.types import (
     TEXT_DOCUMENT_COMPLETION,
     TEXT_DOCUMENT_DID_CHANGE,
     TEXT_DOCUMENT_DID_OPEN,
+    TEXT_DOCUMENT_DOCUMENT_LINK,
     TEXT_DOCUMENT_HOVER,
     CompletionItem,
     CompletionItemKind,
     CompletionList,
     CompletionParams,
     DidChangeTextDocumentParams,
+    DocumentLink,
+    DocumentLinkParams,
     Hover,
     MarkupContent,
     MarkupKind,
@@ -28,7 +31,7 @@ from tree_sitter_lsp.diagnose import get_diagnostics
 from tree_sitter_lsp.finders import PositionFinder
 from tree_sitter_zathurarc import parser
 
-from .finders import DIAGNOSTICS_FINDER_CLASSES
+from .finders import DIAGNOSTICS_FINDER_CLASSES, ImportZathurarcFinder
 from .utils import get_schema
 
 
@@ -63,6 +66,19 @@ class ZathuraLanguageServer(LanguageServer):
                 "zathurarc",
             )
             self.publish_diagnostics(params.text_document.uri, diagnostics)
+
+        @self.feature(TEXT_DOCUMENT_DOCUMENT_LINK)
+        def document_link(params: DocumentLinkParams) -> list[DocumentLink]:
+            r"""Get document links.
+
+            :param params:
+            :type params: DocumentLinkParams
+            :rtype: list[DocumentLink]
+            """
+            document = self.workspace.get_document(params.text_document.uri)
+            return ImportZathurarcFinder().get_document_links(
+                document.uri, self.trees[document.uri]
+            )
 
         @self.feature(TEXT_DOCUMENT_HOVER)
         def hover(params: TextDocumentPositionParams) -> Hover | None:
