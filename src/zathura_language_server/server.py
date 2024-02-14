@@ -1,6 +1,7 @@
 r"""Server
 ==========
 """
+
 from typing import Any
 
 from lsprotocol.types import (

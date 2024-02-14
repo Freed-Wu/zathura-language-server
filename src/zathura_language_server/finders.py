@@ -1,6 +1,7 @@
 r"""Finders
 ===========
 """
+
 from dataclasses import dataclass
 
 from lsprotocol.types import DiagnosticSeverity
