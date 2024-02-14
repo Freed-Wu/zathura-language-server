@@ -108,10 +108,12 @@ def init_schema() -> dict[str, Any]:
     for mode in ["normal", "fullscreen", "presentation", "index"]:
         schemas[filetype]["properties"]["unmap"]["properties"][mode] = {
             "type": "array",
-            "items": {"uniqueItems": True, "anyOf": anyOf},
+            "uniqueItems": True,
+            "items": {"anyOf": anyOf},
         }
         schemas[filetype]["properties"]["map"]["properties"][mode] = {
             "type": "array",
+            "uniqueItems": True,
             "items": {
                 "type": "object",
                 "additionalProperties": False,
@@ -120,7 +122,6 @@ def init_schema() -> dict[str, Any]:
                     "function": {"type": "string", "enum": functions},
                     "argument": {"type": "string", "enum": arguments + [None]},
                 },
-                "uniqueItems": True,
             },
         }
 
