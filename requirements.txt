@@ -1,8 +1,8 @@
 #!/usr/bin/env -S pip install -r
 
-platformdirs
-pygls
-# UNI.get_uri()
-tree-sitter-lsp >= 0.0.11
+# ErrorFinder
+tree-sitter-lsp >= 0.0.13
 tree-sitter-zathurarc >= 0.0.3
+# https://python-jsonschema.readthedocs.io/en/stable/validate/#validating-formats
+# validate color
 webcolors
