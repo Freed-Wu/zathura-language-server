@@ -46,15 +46,12 @@ repos:
     rev: 3.0.0
     hooks:
       - id: check-mailmap
-      - id: shellcheck
-        exclude_types:
-          - zsh
   - repo: https://github.com/rhysd/actionlint
     rev: v1.6.26
     hooks:
       - id: actionlint
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.34.0
+    rev: v1.35.1
     hooks:
       - id: yamllint
   - repo: https://github.com/executablebooks/mdformat
@@ -69,7 +66,6 @@ repos:
           - mdformat-deflist
           - mdformat-beautysh
           - mdformat-ruff
-          - ruff
           - mdformat-config
           - mdformat-web
   - repo: https://github.com/DavidAnson/markdownlint-cli2
@@ -78,10 +74,6 @@ repos:
       - id: markdownlint-cli2
         additional_dependencies:
           - markdown-it-texmath
-  - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.8.0-1
-    hooks:
-      - id: shfmt
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.2.1
     hooks:
@@ -94,5 +86,4 @@ repos:
 
 ci:
   skip:
-    - shellcheck
     - pyright
