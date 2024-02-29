@@ -71,6 +71,10 @@ A language server for zathura's zathurarc.
 
 ![function](https://github.com/Freed-Wu/zathura-language-server/assets/32936898/45b75d73-d8ec-42b6-881e-8255e3a4f6b1)
 
+## How Does It Work
+
+See [here](https://github.com/neomutt/lsp-tree-sitter#usage).
+
 See
 [![readthedocs](https://shields.io/readthedocs/zathura-language-server)](https://zathura-language-server.readthedocs.io)
 to know more.

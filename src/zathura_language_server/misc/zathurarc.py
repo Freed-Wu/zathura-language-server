@@ -4,7 +4,7 @@ r"""Zathurarc
 
 from typing import Any
 
-from tree_sitter_lsp.misc import get_md_tokens
+from lsp_tree_sitter.misc import get_md_tokens
 
 from .._metainfo import SOURCE, project
 
