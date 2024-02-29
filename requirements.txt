@@ -1,7 +1,6 @@
 #!/usr/bin/env -S pip install -r
 
-# ErrorFinder
-tree-sitter-lsp >= 0.0.13
+lsp-tree-sitter
 tree-sitter-zathurarc >= 0.0.3
 # https://python-jsonschema.readthedocs.io/en/stable/validate/#validating-formats
 # validate color
