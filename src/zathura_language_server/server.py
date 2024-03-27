@@ -29,10 +29,9 @@ from lsprotocol.types import (
     TextDocumentPositionParams,
 )
 from pygls.server import LanguageServer
-from tree_sitter_zathurarc import parser
 
 from .finders import DIAGNOSTICS_FINDER_CLASSES, ImportZathurarcFinder
-from .utils import get_schema
+from .utils import get_schema, parser
 
 
 class ZathuraLanguageServer(LanguageServer):

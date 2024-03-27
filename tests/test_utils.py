@@ -2,9 +2,8 @@ r"""Test utils."""
 
 import os
 
-from tree_sitter_zathurarc import parser
 from zathura_language_server.finders import ImportZathurarcFinder
-from zathura_language_server.utils import get_schema
+from zathura_language_server.utils import get_schema, parser
 
 
 class Test:
