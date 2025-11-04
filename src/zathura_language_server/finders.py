@@ -17,7 +17,7 @@ class ImportZathurarcFinder(QueryFinder):
 
     def __init__(
         self,
-        message: str = "{{uni.get_text()}}: error",
+        message: str = "{{uni.text}}: error",
         severity: DiagnosticSeverity = DiagnosticSeverity.Information,
     ):
         r"""Init.

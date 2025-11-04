@@ -4,6 +4,7 @@ r"""Server
 
 from typing import Any
 
+from lsp_tree_sitter import UNI
 from lsp_tree_sitter.complete import (
     get_completion_list_by_enum,
     get_completion_list_by_uri,
@@ -26,9 +27,10 @@ from lsprotocol.types import (
     Hover,
     MarkupContent,
     MarkupKind,
+    PublishDiagnosticsParams,
     TextDocumentPositionParams,
 )
-from pygls.server import LanguageServer
+from pygls.lsp.server import LanguageServer
 
 from .finders import DIAGNOSTICS_FINDER_CLASSES, ImportZathurarcFinder
 from .utils import get_schema, parser
@@ -56,7 +58,9 @@ class ZathuraLanguageServer(LanguageServer):
             :type params: DidChangeTextDocumentParams
             :rtype: None
             """
-            document = self.workspace.get_document(params.text_document.uri)
+            document = self.workspace.get_text_document(
+                params.text_document.uri
+            )
             self.trees[document.uri] = parser.parse(document.source.encode())
             diagnostics = get_diagnostics(
                 document.uri,
@@ -64,7 +68,12 @@ class ZathuraLanguageServer(LanguageServer):
                 DIAGNOSTICS_FINDER_CLASSES,
                 "zathurarc",
             )
-            self.publish_diagnostics(params.text_document.uri, diagnostics)
+            self.text_document_publish_diagnostics(
+                PublishDiagnosticsParams(
+                    params.text_document.uri,
+                    diagnostics,
+                )
+            )
 
         @self.feature(TEXT_DOCUMENT_DOCUMENT_LINK)
         def document_link(params: DocumentLinkParams) -> list[DocumentLink]:
@@ -74,7 +83,9 @@ class ZathuraLanguageServer(LanguageServer):
             :type params: DocumentLinkParams
             :rtype: list[DocumentLink]
             """
-            document = self.workspace.get_document(params.text_document.uri)
+            document = self.workspace.get_text_document(
+                params.text_document.uri
+            )
             return ImportZathurarcFinder().get_document_links(
                 document.uri, self.trees[document.uri]
             )
@@ -87,13 +98,15 @@ class ZathuraLanguageServer(LanguageServer):
             :type params: TextDocumentPositionParams
             :rtype: Hover | None
             """
-            document = self.workspace.get_document(params.text_document.uri)
+            document = self.workspace.get_text_document(
+                params.text_document.uri
+            )
             uni = PositionFinder(params.position, right_equal=True).find(
                 document.uri, self.trees[document.uri]
             )
             if uni is None:
                 return None
-            text = uni.get_text()
+            text = uni.text
             result = None
             if uni.node.range.start_point[1] == 0:
                 result = get_schema()["properties"].get(text)
@@ -105,7 +118,7 @@ class ZathuraLanguageServer(LanguageServer):
                 return None
             return Hover(
                 MarkupContent(MarkupKind.Markdown, result["description"]),
-                uni.get_range(),
+                uni.range,
             )
 
         @self.feature(TEXT_DOCUMENT_COMPLETION)
@@ -116,13 +129,15 @@ class ZathuraLanguageServer(LanguageServer):
             :type params: CompletionParams
             :rtype: CompletionList
             """
-            document = self.workspace.get_document(params.text_document.uri)
+            document = self.workspace.get_text_document(
+                params.text_document.uri
+            )
             uni = PositionFinder(params.position, right_equal=True).find(
                 document.uri, self.trees[document.uri]
             )
             if uni is None:
                 return CompletionList(False, [])
-            text = uni.get_text()
+            text = uni.text
             if uni.node.range.start_point[1] == 0:
                 return CompletionList(
                     False,
@@ -162,7 +177,7 @@ class ZathuraLanguageServer(LanguageServer):
                 if node is None:
                     return CompletionList(False, [])
                 property = get_schema()["properties"]["set"]["properties"].get(
-                    uni.node2text(node), {}
+                    UNI(node).text, {}
                 )
                 enum = property.get("enum", {})
                 if property.get("type", "") == "boolean":

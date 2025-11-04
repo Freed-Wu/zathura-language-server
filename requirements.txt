@@ -1,6 +1,7 @@
 #!/usr/bin/env -S pip install -r
 
-lsp-tree-sitter
+lsp-tree-sitter >= 0.1.0
+pygls >= 2.0.0
 tree-sitter-zathurarc >= 0.0.4
 # https://python-jsonschema.readthedocs.io/en/stable/validate/#validating-formats
 # validate color

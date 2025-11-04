@@ -44,17 +44,18 @@ class ZathurarcTrie(Trie):
 
                 def convert(x):
                     return x == "true"
+
             else:
 
                 def convert(x):
                     return x.strip("'\"")
 
-            text = UNI.node2text(node)
+            text = UNI(node).text
             if text != "":
                 text = convert(text)
-            return cls(UNI.node2range(node), parent, text)
+            return cls(UNI(node).range, parent, text)
         if node.type == "map_directive":
-            trie = cls(UNI.node2range(node), parent, {})
+            trie = cls(UNI(node).range, parent, {})
             key: Node = node.children[1]
             if key.type == "mode":
                 key: Node = key.next_sibling  # type: ignore
@@ -62,20 +63,20 @@ class ZathurarcTrie(Trie):
             argument = function.next_sibling
 
             value: dict[str, Trie] = trie.value  # type: ignore
-            value["key"] = cls(UNI.node2range(key), trie, UNI.node2text(key))  # type: ignore
+            value["key"] = cls(UNI(key).range, trie, UNI(key).text)  # type: ignore
             value["function"] = cls(
-                UNI.node2range(function), trie, UNI.node2text(function)
+                UNI(function).range, trie, UNI(function).text
             )  # type: ignore
             if argument := function.next_sibling:
                 value["argument"] = cls(
-                    UNI.node2range(argument), trie, UNI.node2text(argument)
+                    UNI(argument).range, trie, UNI(argument).text
                 )  # type: ignore
             return trie
         if node.type == "unmap_directive":
             key = node.children[1]
             if key.type == "mode":
                 key = key.next_sibling  # type: ignore
-            return cls(UNI.node2range(key), parent, UNI.node2text(key))
+            return cls(UNI(key).range, parent, UNI(key).text)
         if node.type == "file":
             trie = cls(Range(Position(0, 0), Position(1, 0)), parent, {})
             for directive in DIRECTIVES:
@@ -87,7 +88,7 @@ class ZathurarcTrie(Trie):
                 value: dict[str, Trie] = trie.value  # type: ignore
                 if _type not in value:
                     trie.value[_type] = cls(  # type: ignore
-                        UNI.node2range(child),
+                        UNI(child).range,
                         trie,
                         {} if _type != "include" else [],
                     )
@@ -95,24 +96,22 @@ class ZathurarcTrie(Trie):
                 value: dict[str, Trie] | list[Trie] = subtrie.value  # type: ignore
                 if child.type == "set_directive":
                     value: dict[str, Trie]
-                    value[UNI.node2text(child.children[1])] = cls.from_node(
+                    value[UNI(child.children[1]).text] = cls.from_node(
                         child, subtrie
                     )
                 elif child.type == "include_directive":
                     value += [  # type: ignore
                         cls(
-                            UNI.node2range(child.children[1]),
+                            UNI(child.children[1]).range,
                             subtrie,
-                            UNI.node2text(child.children[1]),
+                            UNI(child.children[1]).text,
                         )
                     ]
                 else:
                     mode = "normal"
                     if child.children[1].type == "mode":
                         mode = (
-                            UNI.node2text(child.children[1])
-                            .lstrip("[")
-                            .rstrip("]")
+                            UNI(child.children[1]).text.lstrip("[").rstrip("]")
                         )
                     if mode not in value:
                         value[mode] = cls(
