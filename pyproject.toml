@@ -10,6 +10,7 @@ keywords = ["json schema", "language server", "tree sitter"]
 dependencies = [
     "lsp-tree-sitter>=0.2",
     "tree-sitter-zathurarc>=0.1.1",
+    "webcolors>=25.10.0",
 ]
 
 [project.urls]

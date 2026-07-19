@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from lsp_tree_sitter.misc import get_md_tokens
 
 SOURCE = "https://github.com/Freed-Wu/zathura-language-server"
