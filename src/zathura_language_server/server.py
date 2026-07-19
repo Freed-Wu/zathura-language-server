@@ -2,215 +2,44 @@ r"""Server
 ==========
 """
 
-from typing import Any
+import os
 
-from lsp_tree_sitter import UNI
-from lsp_tree_sitter.complete import (
-    get_completion_list_by_enum,
-    get_completion_list_by_uri,
+from lsp_tree_sitter.completer import (
+    PathCompleter,
+    SchemaCompleter,
+    ValueCompleter,
 )
-from lsp_tree_sitter.diagnose import get_diagnostics
-from lsp_tree_sitter.finders import PositionFinder
-from lsprotocol.types import (
-    TEXT_DOCUMENT_COMPLETION,
-    TEXT_DOCUMENT_DID_CHANGE,
-    TEXT_DOCUMENT_DID_OPEN,
-    TEXT_DOCUMENT_DOCUMENT_LINK,
-    TEXT_DOCUMENT_HOVER,
-    CompletionItem,
-    CompletionItemKind,
-    CompletionList,
-    CompletionParams,
-    DidChangeTextDocumentParams,
-    DocumentLink,
-    DocumentLinkParams,
-    Hover,
-    MarkupContent,
-    MarkupKind,
-    PublishDiagnosticsParams,
-    TextDocumentPositionParams,
-)
-from pygls.lsp.server import LanguageServer
-
-from .finders import DIAGNOSTICS_FINDER_CLASSES, ImportZathurarcFinder
-from .utils import get_schema, parser
+from lsp_tree_sitter.linter import PathLinter, SchemaLinter
+from lsp_tree_sitter.server import TreeSitterLanguageServer
+from tree_sitter import Language, Parser
+from tree_sitter_zathurarc import language as get_language_ptr
+from tree_sitter_zathurarc import queries
 
 
-class ZathuraLanguageServer(LanguageServer):
-    r"""Zathura language server."""
+class ZathuraLanguageServer(TreeSitterLanguageServer):
+    def __init__(self, *args, **kwargs) -> None:
+        parser = Parser()
+        language = Language(get_language_ptr())
+        parser.language = language
 
-    def __init__(self, *args: Any) -> None:
-        r"""Init.
+        assets_path = os.path.join(os.path.dirname(__file__), "assets")
+        schema_file = os.path.join(assets_path, "json", "zathurarc.json")
+        code_file = os.path.join(assets_path, "jq", "main.jq")
+        schema_completer = SchemaCompleter.from_files(schema_file, code_file)
+        code_file = os.path.join(assets_path, "jq", "value.jq")
+        value_completer = ValueCompleter.from_files(schema_file, code_file)
+        path_completer = PathCompleter(
+            "path", {"zathurarc*": "zathurarc", "**/zathurarc*": "zathurarc"}
+        )
+        path_linter = PathLinter.from_queries(language, queries)
+        schema_linter = SchemaLinter.from_queries(
+            language, queries, schema_file
+        )
 
-        :param args:
-        :type args: Any
-        :rtype: None
-        """
-        super().__init__(*args)
-        self.trees = {}
-
-        @self.feature(TEXT_DOCUMENT_DID_OPEN)
-        @self.feature(TEXT_DOCUMENT_DID_CHANGE)
-        def did_change(params: DidChangeTextDocumentParams) -> None:
-            r"""Did change.
-
-            :param params:
-            :type params: DidChangeTextDocumentParams
-            :rtype: None
-            """
-            document = self.workspace.get_text_document(
-                params.text_document.uri
-            )
-            self.trees[document.uri] = parser.parse(document.source.encode())
-            diagnostics = get_diagnostics(
-                document.uri,
-                self.trees[document.uri],
-                DIAGNOSTICS_FINDER_CLASSES,
-                "zathurarc",
-            )
-            self.text_document_publish_diagnostics(
-                PublishDiagnosticsParams(
-                    params.text_document.uri,
-                    diagnostics,
-                )
-            )
-
-        @self.feature(TEXT_DOCUMENT_DOCUMENT_LINK)
-        def document_link(params: DocumentLinkParams) -> list[DocumentLink]:
-            r"""Get document links.
-
-            :param params:
-            :type params: DocumentLinkParams
-            :rtype: list[DocumentLink]
-            """
-            document = self.workspace.get_text_document(
-                params.text_document.uri
-            )
-            return ImportZathurarcFinder().get_document_links(
-                document.uri, self.trees[document.uri]
-            )
-
-        @self.feature(TEXT_DOCUMENT_HOVER)
-        def hover(params: TextDocumentPositionParams) -> Hover | None:
-            r"""Hover.
-
-            :param params:
-            :type params: TextDocumentPositionParams
-            :rtype: Hover | None
-            """
-            document = self.workspace.get_text_document(
-                params.text_document.uri
-            )
-            uni = PositionFinder(params.position, right_equal=True).find(
-                document.uri, self.trees[document.uri]
-            )
-            if uni is None:
-                return None
-            text = uni.text
-            result = None
-            if uni.node.range.start_point[1] == 0:
-                result = get_schema()["properties"].get(text)
-            elif uni.node.type == "option":
-                result = get_schema()["properties"]["set"]["properties"].get(
-                    text
-                )
-            if result is None:
-                return None
-            return Hover(
-                MarkupContent(MarkupKind.Markdown, result["description"]),
-                uni.range,
-            )
-
-        @self.feature(TEXT_DOCUMENT_COMPLETION)
-        def completions(params: CompletionParams) -> CompletionList:
-            r"""Completions.
-
-            :param params:
-            :type params: CompletionParams
-            :rtype: CompletionList
-            """
-            document = self.workspace.get_text_document(
-                params.text_document.uri
-            )
-            uni = PositionFinder(params.position, right_equal=True).find(
-                document.uri, self.trees[document.uri]
-            )
-            if uni is None:
-                return CompletionList(False, [])
-            text = uni.text
-            if uni.node.range.start_point[1] == 0:
-                return CompletionList(
-                    False,
-                    [
-                        CompletionItem(
-                            x,
-                            kind=CompletionItemKind.Keyword,
-                            documentation=MarkupContent(
-                                MarkupKind.Markdown, property["description"]
-                            ),
-                            insert_text=x,
-                        )
-                        for x, property in get_schema()["properties"].items()
-                        if x.startswith(text)
-                    ],
-                )
-            elif uni.node.type == "option":
-                return CompletionList(
-                    False,
-                    [
-                        CompletionItem(
-                            x,
-                            kind=CompletionItemKind.Variable,
-                            documentation=MarkupContent(
-                                MarkupKind.Markdown, property["description"]
-                            ),
-                            insert_text=x,
-                        )
-                        for x, property in get_schema()["properties"]["set"][
-                            "properties"
-                        ].items()
-                        if x.startswith(text)
-                    ],
-                )
-            elif uni.node.type == "string":
-                node = uni.node.prev_sibling
-                if node is None:
-                    return CompletionList(False, [])
-                property = get_schema()["properties"]["set"]["properties"].get(
-                    UNI(node).text, {}
-                )
-                enum = property.get("enum", {})
-                if property.get("type", "") == "boolean":
-                    enum = {"true", "false"}
-                return CompletionList(
-                    False,
-                    [
-                        CompletionItem(
-                            x,
-                            kind=CompletionItemKind.Constant,
-                            insert_text=x,
-                        )
-                        for x in enum
-                        if x.startswith(text)
-                    ],
-                )
-            elif uni.node.type == "mode_name":
-                return get_completion_list_by_enum(
-                    text,
-                    {"enum": get_schema()["properties"]["map"]["properties"]},
-                )
-            # FIXME: find key node will get None
-            elif uni.node.type in {"key", "function", "argument"}:
-                return get_completion_list_by_enum(
-                    text,
-                    get_schema()["properties"]["map"]["properties"]["normal"][
-                        "items"
-                    ]["properties"][uni.node.type],
-                )
-            elif uni.node.type == "path":
-                return get_completion_list_by_uri(
-                    text,
-                    document.uri,
-                    {"zathurarc*": "zathurarc", "**/zathurarc*": "zathurarc"},
-                )
-            return CompletionList(False, [])
+        super().__init__(
+            parser,
+            (schema_linter, path_linter),
+            (schema_completer, value_completer, path_completer),
+            *args,
+            **kwargs,
+        )
