@@ -1,5 +1,5 @@
 if $type == "string" then
-  .properties.set.properties[$prev]
+  .properties.set.properties[$texts[0]]
 else
   empty
 end |
