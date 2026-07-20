@@ -8,7 +8,7 @@ license = "GPL-3.0-or-later"
 authors = [{ name = "Wu, Zhenyu", email = "wuzhenyu@ustc.edu" }]
 keywords = ["json schema", "language server", "tree sitter"]
 dependencies = [
-    "lsp-tree-sitter>=0.2.3",
+    "lsp-tree-sitter>=0.2.4",
     "tree-sitter-zathurarc>=0.1.2",
     "webcolors>=25.10.0",
 ]
