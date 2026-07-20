@@ -41,7 +41,6 @@
 [![pypi/pyversions](https://shields.io/pypi/pyversions/zathura-language-server)](https://pypi.org/project/zathura-language-server/#files)
 
 Language server for zathurarc.
+Refer [lsp-tree-sitter](https://github.com/neomutt/lsp-tree-sitter).
 
 ![screenshot](https://github.com/user-attachments/assets/2c65e650-58e1-49d4-a252-e766f319c545)
-
-Refer [lsp-tree-sitter](https://github.com/neomutt/lsp-tree-sitter).
