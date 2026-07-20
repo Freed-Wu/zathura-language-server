@@ -1,6 +1,6 @@
 [project]
 name = "zathura-language-server"
-version = "0.1.1"
+version = "0.1.2"
 description = "Language server for zathurarc."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -21,6 +21,11 @@ Source = "https://github.com/Freed-Wu/zathura-language-server"
 
 [project.scripts]
 zathura-language-server = "zathura_language_server.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov>=7.1.0",
+]
 
 [build-system]
 requires = ["uv_build<0.12"]

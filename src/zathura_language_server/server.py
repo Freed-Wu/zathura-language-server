@@ -23,11 +23,11 @@ class ZathuraLanguageServer(TreeSitterLanguageServer):
         parser.language = language
 
         assets_path = os.path.join(os.path.dirname(__file__), "assets")
-        schema_file = os.path.join(assets_path, "json", "zathurarc.json")
         code_file = os.path.join(assets_path, "jq", "main.jq")
-        schema_completer = SchemaCompleter.from_files(schema_file, code_file)
+        schema_file = os.path.join(assets_path, "json", "zathurarc.json")
+        schema_completer = SchemaCompleter.from_files(code_file, schema_file)
         code_file = os.path.join(assets_path, "jq", "value.jq")
-        value_completer = ValueCompleter.from_files(schema_file, code_file)
+        value_completer = ValueCompleter.from_files(code_file, schema_file)
         path_completer = PathCompleter(
             "path", {"zathurarc*": "zathurarc", "**/zathurarc*": "zathurarc"}
         )
