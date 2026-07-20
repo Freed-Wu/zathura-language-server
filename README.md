@@ -40,12 +40,6 @@
 [![pypi/implementation](https://shields.io/pypi/implementation/zathura-language-server)](https://pypi.org/project/zathura-language-server/#files)
 [![pypi/pyversions](https://shields.io/pypi/pyversions/zathura-language-server)](https://pypi.org/project/zathura-language-server/#files)
 
-[![npm](https://img.shields.io/npm/dw/zathura-language-server)](https://www.npmjs.com/package/zathura-language-server)
-
-[![Crates.io (recent)](https://img.shields.io/crates/dr/zathura-language-server)](https://crates.io/crates/zathura-language-server)
-
-[![luarocks](https://img.shields.io/luarocks/v/Freed-Wu/zathura-language-server)](https://luarocks.org/modules/Freed-Wu/zathura-language-server)
-
 Language server for zathurarc.
 
 ![screenshot](https://github.com/user-attachments/assets/2c65e650-58e1-49d4-a252-e766f319c545)
