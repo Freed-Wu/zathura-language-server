@@ -1,0 +1,8 @@
+---
+- id: zathura-language-server-check
+  name: zathura language server check
+  description: >
+    Check zathurarc
+  language: python
+  files: ^zathurarc($|\..*)
+  entry: zathura-language-server --check
