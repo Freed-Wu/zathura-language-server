@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import json
+
 from lsp_tree_sitter.misc import get_md_tokens
 
 SOURCE = "https://github.com/Freed-Wu/zathura-language-server"
@@ -207,4 +209,4 @@ schemas[filetype]["properties"]["set"]["properties"]["selection-clipboard"][
     "enum"
 ] = ["clipboard", "primary"]
 
-print(schemas)
+print(json.dumps(schemas, indent=2))
