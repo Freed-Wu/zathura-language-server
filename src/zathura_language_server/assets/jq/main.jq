@@ -1,3 +1,4 @@
+$nodes[0].type as $type |
 if $type == "option" then
   .properties.set.properties
 elif $type == "command" or $cursor[1] == 0 then
@@ -9,7 +10,7 @@ elif [$type] | inside(["key", "function", "argument"]) then
 else
   {}
 end | to_entries[] |
-if .key | (if $complete then startswith($text) else . == $text end) then
+if .key | ($nodes[0].text as $text | if $complete then startswith($text) else . == $text end) then
   {
     label: .key,
     insert_text: .key,
