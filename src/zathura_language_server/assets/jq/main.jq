@@ -1,7 +1,7 @@
-$nodes[0].type as $type |
+(if $cursor[1] == 0 then "command" else $nodes[0].type end) as $type |
 if $type == "option" then
   .properties.set.properties
-elif $type == "command" or $cursor[1] == 0 then
+elif $type == "command" then
   .properties
 elif $type == "mode_name" then
   .properties.map.properties
@@ -24,7 +24,7 @@ if .key | ($nodes[0].text as $text | if $complete then startswith($text) else . 
       end
     ),
     documentation: (
-      if $type == "option" or $type == "command" then
+      if .value.description then
         {kind: "markdown", value: .value.description}
       else
         null
